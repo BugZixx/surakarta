@@ -346,26 +346,35 @@ window.onload = function () {
       return;
     }
 
-    for (var i = peca.boardY; i <= 5; i++) {
-      if (i < 5) if (board.boardCoordinates[peca.boardX][i + 1] != 0) break;
+    var positiveRow = checkRow(peca.boardX, peca.boardY + 1, 1);
 
-      if (i == 5) {
-        var occupied = checkCollumn(peca.boardX, 5, -1);
-        if (occupied.length > 0) {
+    if (positiveRow.length == 0) {
+      if (peca.boardX > 2.5) {
+        nextCollumn = peca.boardX;
+        startPos = 5;
+        direction = -1;
+      } else {
+        nextCollumn = 5 - peca.boardX;
+        startPos = 0;
+        direction = 1;
+      }
+      var occupied = checkCollumn(nextCollumn, startPos, direction);
+      if (occupied.length > 0) {
+        if (occupied[0] != peca.boardY)
           criaPecaTemp(
             peca,
-            peca.boardX - peca.boardY,
+            nextCollumn - peca.boardY,
             occupied[0] - peca.boardX,
             occupied[0] - peca.boardX,
-            peca.boardX - peca.boardY
+            nextCollumn - peca.boardY
           );
-        }
+      } else {
       }
     }
   }
 
   function criaPecaTemp(peca, valX, valY, valBoardX, valBoardY) {
-    var pecaT = new Peca(25, "cyan");
+    var pecaT = new Peca(25);
     pecaT.x = peca.x + valX * ((canvas.width * 0.5) / 6);
     pecaT.y = peca.y + valY * ((canvas.width * 0.5) / 6);
     pecaT.boardX = peca.boardX + valBoardX;
@@ -375,9 +384,9 @@ window.onload = function () {
   }
 
   function checkRow(index, startPosition, direction) {
-    var occupied;
+    var occupied = [];
 
-    for (var i = startPosition; i <= 5; i += direction) {
+    for (var i = startPosition; i <= 5 && i >= 0; i += direction) {
       if (board.boardCoordinates[index][i] != 0) occupied.push(i);
     }
     console.log(occupied);
@@ -385,14 +394,6 @@ window.onload = function () {
   }
 
   function checkCollumn(index, startPosition, direction) {
-    console.log(
-      "Checking collum " +
-        index +
-        ", starting at position " +
-        startPosition +
-        " with direction " +
-        direction
-    );
     var occupied = [];
 
     for (var i = startPosition; i <= 5 && i >= 0; i += direction) {

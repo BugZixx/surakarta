@@ -3,7 +3,7 @@ function Peca(radius, color) {
     radius = 40;
   }
   if (color === undefined) {
-    color = "white";
+    color = "rgba(128, 220, 196, 0.4)";
   }
   // coordenadas do local em que a peça esta no canvas
   this.x = 0;
