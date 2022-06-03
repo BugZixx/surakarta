@@ -358,17 +358,54 @@ window.onload = function () {
         startPos = 0;
         direction = 1;
       }
-      var occupied = checkCollumn(nextCollumn, startPos, direction);
-      if (occupied.length > 0) {
-        if (occupied[0] != peca.boardY)
+
+      var firstCollumn = checkCollumn(nextCollumn, startPos, direction);
+
+      if (firstCollumn.length > 0) {
+        if (firstCollumn[0] != peca.boardX)
           criaPecaTemp(
             peca,
             nextCollumn - peca.boardY,
-            occupied[0] - peca.boardX,
-            occupied[0] - peca.boardX,
+            firstCollumn[0] - peca.boardX,
+            firstCollumn[0] - peca.boardX,
             nextCollumn - peca.boardY
           );
       } else {
+        var negativeRow = checkRow(5 - peca.boardX, 5, -1);
+
+        if(negativeRow.length > 0) {
+          criaPecaTemp(
+            peca,
+            negativeRow[0] - peca.boardY,
+            5 - peca.boardX - peca.boardX,
+            5 - peca.boardX - peca.boardX,
+            negativeRow[0] - peca.boardY
+          );
+        } else {
+          if (peca.boardX < 2.5) {
+            nextCollumn = peca.boardX;
+            startPos = 5;
+            direction = -1;
+          } else {
+            nextCollumn = 5 - peca.boardX;
+            startPos = 0;
+            direction = 1;
+          }
+    
+          var secondCollumn = checkCollumn(nextCollumn, startPos, direction);
+
+          if(secondCollumn.length > 0){
+            if (secondCollumn[0] != peca.boardX){
+              criaPecaTemp(
+                peca,
+                nextCollumn - peca.boardY,
+                secondCollumn[0] - peca.boardX,
+                secondCollumn[0] - peca.boardX,
+                nextCollumn - peca.boardY
+              );
+            }
+          }
+        }
       }
     }
   }
