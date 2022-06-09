@@ -178,9 +178,7 @@ window.onload = function () {
     //######canvas.width*0.5
     // todas estas pecas iram ter o numero 2 no tabuleiro
     for (
-      var i = ((canvas.width * 0.5) / 12) * 7;
-      i < canvas.width * 0.75;
-      i += (canvas.width * 0.5) / 6
+      var i = ((canvas.width * 0.5) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.5) / 6
     ) {
       var peca = new Peca(25, "black");
       peca.x = i;
@@ -199,9 +197,7 @@ window.onload = function () {
     x = 1;
 
     for (
-      var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7;
-      i < canvas.width * 0.75;
-      i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
+      var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
     ) {
       var peca = new Peca(25, "black");
       peca.x = i;
@@ -220,9 +216,7 @@ window.onload = function () {
     y = 0;
     x = 4;
     for (
-      var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7;
-      i < canvas.width * 0.75;
-      i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
+      var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
     ) {
       var peca = new Peca(25, "white");
       peca.x = i;
@@ -238,9 +232,7 @@ window.onload = function () {
     y = 0;
     x = 5;
     for (
-      var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7;
-      i < canvas.width * 0.75;
-      i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
+      var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
     ) {
       var peca = new Peca(25, "white");
       peca.x = i;
@@ -346,9 +338,9 @@ window.onload = function () {
       return;
     }
 
-    var positiveRow = checkRow(peca.boardX, peca.boardY + 1, 1);
+    var initialRow = checkRow(peca.boardX, peca.boardY + 1, 1);
 
-    if (positiveRow.length == 0) {
+    if (initialRow.length == 0 && peca.boardX != 0 && peca.boardX != 5) {
       if (peca.boardX > 2.5) {
         nextCollumn = peca.boardX;
         startPos = 5;
@@ -362,7 +354,7 @@ window.onload = function () {
       var firstCollumn = checkCollumn(nextCollumn, startPos, direction);
 
       if (firstCollumn.length > 0) {
-        if (firstCollumn[0] != peca.boardX)
+        if (PlayerTurn == 1 && board.boardCoordinates[firstCollumn[0]][nextCollumn] == 2) {
           criaPecaTemp(
             peca,
             nextCollumn - peca.boardY,
@@ -370,17 +362,36 @@ window.onload = function () {
             firstCollumn[0] - peca.boardX,
             nextCollumn - peca.boardY
           );
+        } else if (PlayerTurn == 2 && board.boardCoordinates[firstCollumn[0]][nextCollumn] == 1) {
+          criaPecaTemp(
+            peca,
+            nextCollumn - peca.boardY,
+            firstCollumn[0] - peca.boardX,
+            firstCollumn[0] - peca.boardX,
+            nextCollumn - peca.boardY
+          );
+        }
       } else {
         var negativeRow = checkRow(5 - peca.boardX, 5, -1);
 
-        if(negativeRow.length > 0) {
-          criaPecaTemp(
-            peca,
-            negativeRow[0] - peca.boardY,
-            5 - peca.boardX - peca.boardX,
-            5 - peca.boardX - peca.boardX,
-            negativeRow[0] - peca.boardY
-          );
+        if (negativeRow.length > 0) {
+          if (PlayerTurn == 1 && board.boardCoordinates[5 - peca.boardX][negativeRow[0]] == 2) {
+            criaPecaTemp(
+              peca,
+              negativeRow[0] - peca.boardY,
+              5 - peca.boardX - peca.boardX,
+              5 - peca.boardX - peca.boardX,
+              negativeRow[0] - peca.boardY
+            );
+          } else if (PlayerTurn == 2 && board.boardCoordinates[5 - peca.boardX][negativeRow[0]] == 1) {
+            criaPecaTemp(
+              peca,
+              negativeRow[0] - peca.boardY,
+              5 - peca.boardX - peca.boardX,
+              5 - peca.boardX - peca.boardX,
+              negativeRow[0] - peca.boardY
+            );
+          }
         } else {
           if (peca.boardX < 2.5) {
             nextCollumn = peca.boardX;
@@ -391,11 +402,11 @@ window.onload = function () {
             startPos = 0;
             direction = 1;
           }
-    
+
           var secondCollumn = checkCollumn(nextCollumn, startPos, direction);
 
-          if(secondCollumn.length > 0){
-            if (secondCollumn[0] != peca.boardX){
+          if (secondCollumn.length > 0) {
+            if (PlayerTurn == 1 && board.boardCoordinates[secondCollumn[0]][nextCollumn] == 2) {
               criaPecaTemp(
                 peca,
                 nextCollumn - peca.boardY,
@@ -403,6 +414,36 @@ window.onload = function () {
                 secondCollumn[0] - peca.boardX,
                 nextCollumn - peca.boardY
               );
+            } else if (PlayerTurn == 2 && board.boardCoordinates[secondCollumn[0]][nextCollumn] == 1) {
+              criaPecaTemp(
+                peca,
+                nextCollumn - peca.boardY,
+                secondCollumn[0] - peca.boardX,
+                secondCollumn[0] - peca.boardX,
+                nextCollumn - peca.boardY
+              );
+            }
+          } else {
+            var positiveRow = checkRow(peca.boardX, 0, 1);
+
+            if (positiveRow.length > 0) {
+              if (PlayerTurn == 1 && board.boardCoordinates[peca.boardX][positiveRow[0]] == 2) {
+                criaPecaTemp(
+                  peca,
+                  positiveRow[0] - peca.boardY,
+                  peca.boardX - peca.boardX,
+                  peca.boardX - peca.boardX,
+                  positiveRow[0] - peca.boardY
+                );
+              } else if (PlayerTurn == 2 && board.boardCoordinates[peca.boardX][positiveRow[0]] == 1) {
+                criaPecaTemp(
+                  peca,
+                  positiveRow[0] - peca.boardY,
+                  peca.boardX - peca.boardX,
+                  peca.boardX - peca.boardX,
+                  positiveRow[0] - peca.boardY
+                );
+              }
             }
           }
         }
@@ -449,10 +490,24 @@ window.onload = function () {
 
       if (dist <= 50) {
         if (PlayerTurn == 1) {
+          if (board.boardCoordinates[pecaT.boardX][pecaT.boardY] == 2) {
+
+            PecasPretas = PecasPretas.filter(peca => (peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY));
+
+            console.log(PecasPretas);
+
+          }
           board.boardCoordinates[peca.boardX][peca.boardY] = 0;
           board.boardCoordinates[pecaT.boardX][pecaT.boardY] = 1;
           PlayerTurn = 2;
         } else if (PlayerTurn == 2) {
+          if (board.boardCoordinates[pecaT.boardX][pecaT.boardY] == 1) {
+
+            PecasBrancas = PecasBrancas.filter(peca => (peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY));
+
+            console.log(PecasBrancas);
+
+          }
           board.boardCoordinates[peca.boardX][peca.boardY] = 0;
           board.boardCoordinates[pecaT.boardX][pecaT.boardY] = 2;
           PlayerTurn = 1;
