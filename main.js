@@ -180,7 +180,7 @@ window.onload = function () {
     for (
       var i = ((canvas.width * 0.5) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.5) / 6
     ) {
-      var peca = new Peca(25, "black");
+      var peca = new Peca(canvas.width /32, "black");
       peca.x = i;
       peca.y = ((canvas.height * 0.75 - canvas.height * 0.25) / 12) * 7;
 
@@ -199,7 +199,7 @@ window.onload = function () {
     for (
       var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
     ) {
-      var peca = new Peca(25, "black");
+      var peca = new Peca(canvas.width /32, "black");
       peca.x = i;
       peca.y = ((canvas.height * 0.75 - canvas.height * 0.25) / 12) * 9;
 
@@ -218,7 +218,7 @@ window.onload = function () {
     for (
       var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
     ) {
-      var peca = new Peca(25, "white");
+      var peca = new Peca(canvas.width /32, "white");
       peca.x = i;
       peca.y = ((canvas.height * 0.75 - canvas.height * 0.25) / 12) * 15;
       peca.boardX = x;
@@ -234,7 +234,7 @@ window.onload = function () {
     for (
       var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
     ) {
-      var peca = new Peca(25, "white");
+      var peca = new Peca(canvas.width /32, "white");
       peca.x = i;
       peca.y = ((canvas.height * 0.75 - canvas.height * 0.25) / 12) * 17;
       peca.boardX = x;
@@ -452,7 +452,7 @@ window.onload = function () {
   }
 
   function criaPecaTemp(peca, valX, valY, valBoardX, valBoardY) {
-    var pecaT = new Peca(25);
+    var pecaT = new Peca(canvas.width /32);
     pecaT.x = peca.x + valX * ((canvas.width * 0.5) / 6);
     pecaT.y = peca.y + valY * ((canvas.width * 0.5) / 6);
     pecaT.boardX = peca.boardX + valBoardX;
