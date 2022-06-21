@@ -174,15 +174,14 @@ window.onload = function () {
     var x = 0,
       // o Y é a coluna da matriz
       y = 0;
-    //desenhar todas as pecas pretas
-    //######canvas.width*0.5
-    // todas estas pecas iram ter o numero 2 no tabuleiro
+    //desenhar todas as pecas pretas ;##todas estas pecas iram ter o numero 2 no tabuleiro
+    // o canvas estar a ser dividido em 24 partes para poder obter o ponto central de cada casa
     for (
-      var i = ((canvas.width * 0.5) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.5) / 6
+      var i = (canvas.width /24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width /32, "black");
       peca.x = i;
-      peca.y = ((canvas.height * 0.75 - canvas.height * 0.25) / 12) * 7;
+      peca.y = ((canvas.height * 0.5) / 12) * 7;
 
       peca.boardX = x;
       peca.boardY = y;
@@ -197,11 +196,11 @@ window.onload = function () {
     x = 1;
 
     for (
-      var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
+      var i = (canvas.width /24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width /32, "black");
       peca.x = i;
-      peca.y = ((canvas.height * 0.75 - canvas.height * 0.25) / 12) * 9;
+      peca.y = ((canvas.height * 0.5) / 12) * 9;
 
       peca.boardX = x;
       peca.boardY = y;
@@ -216,7 +215,7 @@ window.onload = function () {
     y = 0;
     x = 4;
     for (
-      var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
+      var i = (canvas.width /24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width /32, "white");
       peca.x = i;
@@ -232,11 +231,11 @@ window.onload = function () {
     y = 0;
     x = 5;
     for (
-      var i = ((canvas.width * 0.75 - canvas.width * 0.25) / 12) * 7; i < canvas.width * 0.75; i += (canvas.width * 0.75 - canvas.width * 0.25) / 6
+      var i = (canvas.width /24) * 7; i < canvas.width * 0.75; i += canvas.width/ 12
     ) {
       var peca = new Peca(canvas.width /32, "white");
       peca.x = i;
-      peca.y = ((canvas.height * 0.75 - canvas.height * 0.25) / 12) * 17;
+      peca.y = ((canvas.height * 0.5) / 12) * 17;
       peca.boardX = x;
       peca.boardY = y;
 
@@ -530,125 +529,5 @@ window.onload = function () {
   //esta função vai ter de procurar 8 vezes por cada canto
   // 8 vezes porque é necessário fazer o scan nos dois sentidos
 
-  // placeholder name
-  function linearScanAttack(peca) {
-    // caso a peca esteja num canto simplesmente resume
-    if (
-      (peca.boardX == 0 && peca.boardY == 0) ||
-      (peca.boardX == 0 && peca.boardY == 5) ||
-      (peca.boardX == 5 && peca.boardY == 0) ||
-      (peca.boardX == 5 && peca.boardY == 5)
-    ) {
-      //corner
-      return false;
-    }
-
-    // apesar de parecer muito mal e possivelmente prejudicar [performance]
-    // aqui pode ser feito um switch em que vai verificar se a peca esta no (0,1),(1,0),(0,2),(2,0),(0,3),(2,5),(0,4),(1,5),(3,0),(5,2),(4,0),(5,1),(5,3),(3,5),(5,4),(4,5)
-    switch ((peca.boardX, peca.boardY)) {
-      case (0, 1):
-        for (var r = 0; r < 1; r++) {
-          for (var i = 0; i < 6; i++) {
-            if (board.boardCoordinates[1][i] == 0) {
-              console.log("Continuing the scan at " + peca.boardX + " " + i);
-              continue;
-            }
-            if (board.boardCoordinates[1][i] == 1) {
-              if (PlayerTurn == 2) {
-                // caso o jogador dois tenha encontrado uma peca branca pode comer la aqui
-              }
-              console.log("I found a white piece at " + peca.boardX + " " + i);
-              break;
-            }
-
-            if (board.boardCoordinates[1][i] == 2) {
-              if (PlayerTurn == 1) {
-                // caso o jogador um tenha encontrado uma peca preta pode comer la aqui
-              }
-
-              console.log("I found a black piece at " + peca.boardX + " " + i);
-              break;
-            }
-          }
-        }
-
-        break;
-
-      case (1, 0):
-        console.log("It worked :)");
-        break;
-
-      case (0, 2):
-        console.log("It worked :)");
-        break;
-      case (2, 0):
-        console.log("It worked :)");
-        break;
-      case (0, 3):
-        console.log("It worked :)");
-        break;
-      case (2, 5):
-        console.log("It worked :)");
-        break;
-      case (0, 4):
-        console.log("It worked :)");
-        break;
-      case (1, 5):
-        console.log("It worked :)");
-        break;
-      case (3, 0):
-        console.log("It worked :)");
-        break;
-      case (5, 2):
-        console.log("It worked :)");
-        break;
-      case (4, 0):
-        console.log("It worked :)");
-        break;
-      case (5, 1):
-        console.log("It worked :)");
-        break;
-      case (5, 3):
-        console.log("It worked :)");
-        break;
-      case (3, 5):
-        console.log("It worked :)");
-        break;
-      case (5, 4):
-        console.log("It worked :)");
-        break;
-      case (4, 5):
-        console.log("It worked :)");
-        break;
-      default:
-        break;
-    }
-    /*
-    for (var r = 0; r < 4; r++) {
-        for (var i = 0; i < 6; i++) {
-            if (board.boardCoordinates[peca.boardX][i] == 0) {
-                //  console.log("Continuing the scan at " + peca.boardX + " " + i);
-                continue;
-            }
-            if (board.boardCoordinates[peca.boardX][i] == 1) {
-                if (PlayerTurn == 2) {
-                    // caso o jogador dois tenha encontrado uma peca branca pode comer la aqui
-                }
-                // console.log("I found a white piece at " + peca.boardX + " " + i);
-                break;
-            }
-
-            if (board.boardCoordinates[peca.boardX][i] == 2) {
-                if (PlayerTurn == 1) {
-                    // caso o jogador um tenha encontrado uma peca preta pode comer la aqui
-                }
-
-
-                // console.log("I found a black piece at " + peca.boardX + " " + i);
-                break;
-            }
-
-        }
-    }*/
-  }
+  
 };
