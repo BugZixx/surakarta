@@ -96,7 +96,6 @@ Board.prototype.draw = function (context) {
     context.stroke();
 
 
-
     // desenhar as linhas dentro do tabuleiro
     for (var i = (context.canvas.width * 0.25); i < (context.canvas.width * 0.75); i += (((context.canvas.width * 0.75) - (context.canvas.width * 0.25)) / 6)) {
         context.beginPath();

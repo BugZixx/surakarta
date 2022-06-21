@@ -42,10 +42,8 @@ Peca.prototype.draw = function (context) {
     }
     context.restore();
   } else {
-
     context.save();
     context.translate(this.x, this.y);
-
     context.lineWidth = this.lineWidth;
     context.fillStyle = this.color;
     context.beginPath();
