@@ -396,6 +396,7 @@ Peca.prototype.move = function () {
         if ((this.x >= ((this.canvas * 6) / 24)) && !this.rotationBaixo) {
           this.x -= 2;
           this.radians = -Math.PI / 2;
+          
         } else if ((this.x <= (((this.canvas * 11) / 24) + 0.001))) {
 
           this.rotationBaixo = true;

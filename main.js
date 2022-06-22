@@ -368,18 +368,18 @@ window.onload = function () {
   }
 
 
-  function criaPecaTemp(peca, valX, valY, valBoardX, valBoardY, something, eixo, direcao) {
+  function criaPecaTemp(peca, valX, valY, valBoardX, valBoardY, something, eixo, orientacao, direcao) {
     var pecaT = new Peca(canvas.width / 32);
     pecaT.x = peca.x + valX * ((canvas.width * 0.5) / 6);
     pecaT.y = peca.y + valY * ((canvas.width * 0.5) / 6);
     pecaT.boardX = peca.boardX + valBoardX;
     pecaT.boardY = peca.boardY + valBoardY;
     if (something) {
-      if (eixo && direcao) pecaT.moverBaixo = true;
-      else if (eixo && !direcao) pecaT.moverCima = true;
-      else if (!eixo && direcao) pecaT.moverDireita = true;
+      if (eixo && direcao) pecaT.moverDireita= true;
+      else if (eixo && !direcao) pecaT.moverBaixo = true;
+      else if (!eixo && direcao) pecaT.moverCima = true;
       else if (!eixo && !direcao) pecaT.moverEsquerda = true;
-      pecaT.direction = direcao;
+      pecaT.direction = orientacao;
     }
 
     PecasTemporarias.push(pecaT);
@@ -421,6 +421,7 @@ window.onload = function () {
             peca.isMoving = true;
             peca.finalPositionX = pecaT.x;
             peca.finalPositionY = pecaT.y;
+           console.log(pecaT.direction);
 
             if (pecaT.moverEsquerda) peca.moverEsquerda = true;
             else if (pecaT.moverDireita) peca.moverDireita = true;
@@ -448,6 +449,7 @@ window.onload = function () {
             peca.isMoving = true;
             peca.finalPositionX = pecaT.x;
             peca.finalPositionY = pecaT.y;
+            console.log(pecaT.direction);
 
             if (pecaT.moverEsquerda) peca.moverEsquerda = true;
             else if (pecaT.moverDireita) peca.moverDireita = true;
@@ -482,8 +484,8 @@ window.onload = function () {
   }
 
   function checkEatingAfterFirstRow(peca, negativeDirection) {
-    var dir = (peca.boardY < 2.5) ? negativeDirection : !negativeDirection;
-    
+    var d = negativeDirection > 0 ? true : false;
+    var dir = (peca.boardX > 2.5) ? d : !d;
     if (
       (negativeDirection == 1 && peca.boardX > 2.5) ||
       (negativeDirection == -1 && peca.boardX < 2.5)
@@ -516,7 +518,7 @@ window.onload = function () {
           nextCollumn - peca.boardY,
           true,
           false,
-          dir
+          dir,d
         );
       } else if (
         PlayerTurn == 2 &&
@@ -530,7 +532,7 @@ window.onload = function () {
           nextCollumn - peca.boardY,
           true,
           false,
-          dir
+          dir,d
         );
       }
     } else {
@@ -550,7 +552,7 @@ window.onload = function () {
             negativeRow[0] - peca.boardY,
             true,
             false,
-            dir
+            dir,d
           );
         } else if (
           PlayerTurn == 2 &&
@@ -564,7 +566,7 @@ window.onload = function () {
             negativeRow[0] - peca.boardY,
             true,
             false,
-            dir
+            dir,d
           );
         }
       } else {
@@ -600,7 +602,7 @@ window.onload = function () {
               nextCollumn - peca.boardY,
               true,
               false,
-              dir
+              dir,d
             );
           } else if (
             PlayerTurn == 2 &&
@@ -614,7 +616,7 @@ window.onload = function () {
               nextCollumn - peca.boardY,
               true,
               false,
-              dir
+              dir,d
             );
           }
         } else {
@@ -634,7 +636,7 @@ window.onload = function () {
                 positiveRow[0] - peca.boardY,
                 true,
                 false,
-                dir
+                dir,d
               );
             } else if (
               PlayerTurn == 2 &&
@@ -648,7 +650,7 @@ window.onload = function () {
                 positiveRow[0] - peca.boardY,
                 true,
                 false,
-                dir
+                dir,d
               );
             }
           }
@@ -658,7 +660,9 @@ window.onload = function () {
   }
 
   function checkEatingAfterFirstCollumn(peca, negativeDirection) {
-    var dir = (peca.boardX > 2.5) ? negativeDirection : !negativeDirection;
+    var d = negativeDirection > 0 ? true : false;
+   
+    var dir = (peca.boardY < 2.5) ? d : !d;
     if (
       (negativeDirection == 1 && peca.boardY > 2.5) ||
       (negativeDirection == -1 && peca.boardY < 2.5)
@@ -691,7 +695,7 @@ window.onload = function () {
           firstRow[0] - peca.boardY,
           true,
           true,
-          dir
+          dir,d
         );
       } else if (
         PlayerTurn == 2 &&
@@ -705,7 +709,7 @@ window.onload = function () {
           firstRow[0] - peca.boardY,
           true,
           true,
-          dir
+          dir,d
         );
       }
     } else {
@@ -725,7 +729,7 @@ window.onload = function () {
             5 - peca.boardY - peca.boardY,
             true,
             true,
-            dir
+            dir,d
           );
         } else if (
           PlayerTurn == 2 &&
@@ -739,7 +743,7 @@ window.onload = function () {
             5 - peca.boardY - peca.boardY,
             true,
             true,
-            dir
+            dir,d
           );
         }
       } else {
@@ -775,7 +779,7 @@ window.onload = function () {
               secondRow[0] - peca.boardY,
               true,
               true,
-              dir
+              dir,d
             );
           } else if (
             PlayerTurn == 2 &&
@@ -789,7 +793,7 @@ window.onload = function () {
               secondRow[0] - peca.boardY,
               true,
               true,
-              dir
+              dir,d
             );
           }
         } else {
@@ -809,7 +813,7 @@ window.onload = function () {
                 peca.boardY - peca.boardY,
                 true,
                 true,
-                dir
+                dir,d
               );
             } else if (
               PlayerTurn == 2 &&
@@ -823,7 +827,7 @@ window.onload = function () {
                 peca.boardY - peca.boardY,
                 true,
                 true,
-                dir
+                dir,d
               );
             }
           }
