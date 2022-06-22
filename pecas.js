@@ -147,10 +147,6 @@ Peca.prototype.move = function () {
 
   }
 
-
-
-
-
   if (this.moverCima) {
     if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
       this.y -= 2;
@@ -178,10 +174,6 @@ Peca.prototype.move = function () {
     }
 
   }
-
-
-
-
 
   if (this.moverEsquerda) {
     if ((this.x >= (((this.canvas * 6) / 24))) && !this.rotationEsquerda) {
@@ -212,10 +204,6 @@ Peca.prototype.move = function () {
 
   }
 
-
-
-
-
   if (this.moverBaixo) {
     if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationBaixo) {
       this.y += 2;
@@ -240,17 +228,8 @@ Peca.prototype.move = function () {
         // console.log(this.y);
         // console.log((((this.canvas * 6) / 24)));
       }
-
     }
-
   }
-
-
-
-
-
-
-
 }
 
 // } else {

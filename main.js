@@ -177,7 +177,9 @@ window.onload = function () {
     //desenhar todas as pecas pretas ;##todas estas pecas iram ter o numero 2 no tabuleiro
     // o canvas estar a ser dividido em 24 partes para poder obter o ponto central de cada casa
     for (
-      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7;
+      i < canvas.width * 0.75;
+      i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width / 32, "black");
       peca.x = i;
@@ -198,7 +200,9 @@ window.onload = function () {
     x = 1;
 
     for (
-      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7;
+      i < canvas.width * 0.75;
+      i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width / 32, "black");
       peca.x = i;
@@ -219,7 +223,9 @@ window.onload = function () {
     y = 0;
     x = 4;
     for (
-      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7;
+      i < canvas.width * 0.75;
+      i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width / 32, "white");
       peca.x = i;
@@ -237,7 +243,9 @@ window.onload = function () {
     y = 0;
     x = 5;
     for (
-      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7;
+      i < canvas.width * 0.75;
+      i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width / 32, "white");
       peca.x = i;
@@ -345,117 +353,26 @@ window.onload = function () {
       return;
     }
 
-    var initialRow = checkRow(peca.boardX, peca.boardY + 1, 1);
+    var plusYRow = checkRow(peca.boardX, peca.boardY + 1, 1);
+    var minusYRow = checkRow(peca.boardX, peca.boardY - 1, -1);
+    var plusXRow = checkRow(peca.boardY, peca.boardX + 1, 1);
+    var minusXRow = checkRow(peca.boardY, peca.boardX - 1, -1);
 
-    if (initialRow.length == 0 && peca.boardX != 0 && peca.boardX != 5) {
-      if (peca.boardX > 2.5) {
-        nextCollumn = peca.boardX;
-        startPos = 5;
-        direction = -1;
-      } else {
-        nextCollumn = 5 - peca.boardX;
-        startPos = 0;
-        direction = 1;
-      }
-
-      var firstCollumn = checkCollumn(nextCollumn, startPos, direction);
-
-      if (firstCollumn.length > 0) {
-        if (PlayerTurn == 1 && board.boardCoordinates[firstCollumn[0]][nextCollumn] == 2) {
-          criaPecaTemp(
-            peca,
-            nextCollumn - peca.boardY,
-            firstCollumn[0] - peca.boardX,
-            firstCollumn[0] - peca.boardX,
-            nextCollumn - peca.boardY
-          );
-        } else if (PlayerTurn == 2 && board.boardCoordinates[firstCollumn[0]][nextCollumn] == 1) {
-          criaPecaTemp(
-            peca,
-            nextCollumn - peca.boardY,
-            firstCollumn[0] - peca.boardX,
-            firstCollumn[0] - peca.boardX,
-            nextCollumn - peca.boardY
-          );
-        }
-      } else {
-        var negativeRow = checkRow(5 - peca.boardX, 5, -1);
-
-        if (negativeRow.length > 0) {
-          if (PlayerTurn == 1 && board.boardCoordinates[5 - peca.boardX][negativeRow[0]] == 2) {
-            criaPecaTemp(
-              peca,
-              negativeRow[0] - peca.boardY,
-              5 - peca.boardX - peca.boardX,
-              5 - peca.boardX - peca.boardX,
-              negativeRow[0] - peca.boardY
-            );
-          } else if (PlayerTurn == 2 && board.boardCoordinates[5 - peca.boardX][negativeRow[0]] == 1) {
-            criaPecaTemp(
-              peca,
-              negativeRow[0] - peca.boardY,
-              5 - peca.boardX - peca.boardX,
-              5 - peca.boardX - peca.boardX,
-              negativeRow[0] - peca.boardY
-            );
-          }
-        } else {
-          if (peca.boardX < 2.5) {
-            nextCollumn = peca.boardX;
-            startPos = 5;
-            direction = -1;
-          } else {
-            nextCollumn = 5 - peca.boardX;
-            startPos = 0;
-            direction = 1;
-          }
-
-          var secondCollumn = checkCollumn(nextCollumn, startPos, direction);
-
-          if (secondCollumn.length > 0) {
-            if (PlayerTurn == 1 && board.boardCoordinates[secondCollumn[0]][nextCollumn] == 2) {
-              criaPecaTemp(
-                peca,
-                nextCollumn - peca.boardY,
-                secondCollumn[0] - peca.boardX,
-                secondCollumn[0] - peca.boardX,
-                nextCollumn - peca.boardY
-              );
-            } else if (PlayerTurn == 2 && board.boardCoordinates[secondCollumn[0]][nextCollumn] == 1) {
-              criaPecaTemp(
-                peca,
-                nextCollumn - peca.boardY,
-                secondCollumn[0] - peca.boardX,
-                secondCollumn[0] - peca.boardX,
-                nextCollumn - peca.boardY
-              );
-            }
-          } else {
-            var positiveRow = checkRow(peca.boardX, 0, 1);
-
-            if (positiveRow.length > 0) {
-              if (PlayerTurn == 1 && board.boardCoordinates[peca.boardX][positiveRow[0]] == 2) {
-                criaPecaTemp(
-                  peca,
-                  positiveRow[0] - peca.boardY,
-                  peca.boardX - peca.boardX,
-                  peca.boardX - peca.boardX,
-                  positiveRow[0] - peca.boardY
-                );
-              } else if (PlayerTurn == 2 && board.boardCoordinates[peca.boardX][positiveRow[0]] == 1) {
-                criaPecaTemp(
-                  peca,
-                  positiveRow[0] - peca.boardY,
-                  peca.boardX - peca.boardX,
-                  peca.boardX - peca.boardX,
-                  positiveRow[0] - peca.boardY
-                );
-              }
-            }
-          }
-        }
-      }
+    if (plusYRow.length == 0 && peca.boardX != 0 && peca.boardX != 5) {
+      checkEatingAfterFirstRow(peca, 1);
     }
+
+    if (minusYRow.length == 0 && peca.boardX != 0 && peca.boardX != 5) {
+      checkEatingAfterFirstRow(peca, -1);
+    }
+
+    // if (plusXRow.length == 0 && peca.boardX != 0 && peca.boardX != 5) {
+    //   checkEatingAfterFirstCollumn(peca, 1);
+    // }
+
+    // if (minusXRow.length == 0 && peca.boardX != 0 && peca.boardX != 5) {
+    //   checkEatingAfterFirstCollumn(peca, -1);
+    // }
   }
 
   function criaPecaTemp(peca, valX, valY, valBoardX, valBoardY) {
@@ -474,7 +391,7 @@ window.onload = function () {
     for (var i = startPosition; i <= 5 && i >= 0; i += direction) {
       if (board.boardCoordinates[index][i] != 0) occupied.push(i);
     }
-    console.log(occupied);
+    console.log("Row " + index + ": " + occupied);
     return occupied;
   }
 
@@ -484,7 +401,7 @@ window.onload = function () {
     for (var i = startPosition; i <= 5 && i >= 0; i += direction) {
       if (board.boardCoordinates[i][index] != 0) occupied.push(i);
     }
-    console.log(occupied);
+    console.log("Collumn " + index + ": " + occupied);
     return occupied;
   }
 
@@ -498,22 +415,24 @@ window.onload = function () {
       if (dist <= 50) {
         if (PlayerTurn == 1) {
           if (board.boardCoordinates[pecaT.boardX][pecaT.boardY] == 2) {
-
-            PecasPretas = PecasPretas.filter(peca => (peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY));
+            PecasPretas = PecasPretas.filter(
+              (peca) =>
+                peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY
+            );
 
             console.log(PecasPretas);
-
           }
           board.boardCoordinates[peca.boardX][peca.boardY] = 0;
           board.boardCoordinates[pecaT.boardX][pecaT.boardY] = 1;
           PlayerTurn = 2;
         } else if (PlayerTurn == 2) {
           if (board.boardCoordinates[pecaT.boardX][pecaT.boardY] == 1) {
-
-            PecasBrancas = PecasBrancas.filter(peca => (peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY));
+            PecasBrancas = PecasBrancas.filter(
+              (peca) =>
+                peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY
+            );
 
             console.log(PecasBrancas);
-
           }
           board.boardCoordinates[peca.boardX][peca.boardY] = 0;
           board.boardCoordinates[pecaT.boardX][pecaT.boardY] = 2;
@@ -534,8 +453,303 @@ window.onload = function () {
     PecasTemporarias = new Array();
   }
 
-  //esta função vai ter de procurar 8 vezes por cada canto
-  // 8 vezes porque é necessário fazer o scan nos dois sentidos
+  function checkEatingAfterFirstRow(peca, negativeDirection) {
+    if (
+      (negativeDirection == 1 && peca.boardX > 2.5) ||
+      (negativeDirection == -1 && peca.boardX < 2.5)
+    ) {
+      nextCollumn = peca.boardX;
+    } else {
+      nextCollumn = 5 - peca.boardX;
+    }
 
+    if (peca.boardX > 2.5) {
+      startPos = 5;
+      direction = -1;
+    } else {
+      startPos = 0;
+      direction = 1;
+    }
 
+    var firstCollumn = checkCollumn(nextCollumn, startPos, direction);
+
+    if (firstCollumn.length > 0) {
+      if (
+        PlayerTurn == 1 &&
+        board.boardCoordinates[firstCollumn[0]][nextCollumn] == 2
+      ) {
+        criaPecaTemp(
+          peca,
+          nextCollumn - peca.boardY,
+          firstCollumn[0] - peca.boardX,
+          firstCollumn[0] - peca.boardX,
+          nextCollumn - peca.boardY
+        );
+      } else if (
+        PlayerTurn == 2 &&
+        board.boardCoordinates[firstCollumn[0]][nextCollumn] == 1
+      ) {
+        criaPecaTemp(
+          peca,
+          nextCollumn - peca.boardY,
+          firstCollumn[0] - peca.boardX,
+          firstCollumn[0] - peca.boardX,
+          nextCollumn - peca.boardY
+        );
+      }
+    } else {
+      var start = negativeDirection > 0 ? 5 : 0
+      var negativeRow = checkRow(5 - peca.boardX, start, -1 * negativeDirection);
+
+      if (negativeRow.length > 0) {
+        if (
+          PlayerTurn == 1 &&
+          board.boardCoordinates[5 - peca.boardX][negativeRow[0]] == 2
+        ) {
+          criaPecaTemp(
+            peca,
+            negativeRow[0] - peca.boardY,
+            5 - peca.boardX - peca.boardX,
+            5 - peca.boardX - peca.boardX,
+            negativeRow[0] - peca.boardY
+          );
+        } else if (
+          PlayerTurn == 2 &&
+          board.boardCoordinates[5 - peca.boardX][negativeRow[0]] == 1
+        ) {
+          criaPecaTemp(
+            peca,
+            negativeRow[0] - peca.boardY,
+            5 - peca.boardX - peca.boardX,
+            5 - peca.boardX - peca.boardX,
+            negativeRow[0] - peca.boardY
+          );
+        }
+      } else {
+        if (
+          (negativeDirection == 1 && peca.boardX < 2.5) ||
+          (negativeDirection == -1 && peca.boardX > 2.5)
+        ) {
+          nextCollumn = peca.boardX;
+        } else {
+          nextCollumn = 5 - peca.boardX;
+        }
+    
+        if (peca.boardX < 2.5) {
+          startPos = 5;
+          direction = -1;
+        } else {
+          startPos = 0;
+          direction = 1;
+        }
+
+        var secondCollumn = checkCollumn(nextCollumn, startPos, direction);
+
+        if (secondCollumn.length > 0) {
+          if (
+            PlayerTurn == 1 &&
+            board.boardCoordinates[secondCollumn[0]][nextCollumn] == 2
+          ) {
+            criaPecaTemp(
+              peca,
+              nextCollumn - peca.boardY,
+              secondCollumn[0] - peca.boardX,
+              secondCollumn[0] - peca.boardX,
+              nextCollumn - peca.boardY
+            );
+          } else if (
+            PlayerTurn == 2 &&
+            board.boardCoordinates[secondCollumn[0]][nextCollumn] == 1
+          ) {
+            criaPecaTemp(
+              peca,
+              nextCollumn - peca.boardY,
+              secondCollumn[0] - peca.boardX,
+              secondCollumn[0] - peca.boardX,
+              nextCollumn - peca.boardY
+            );
+          }
+        } else {
+          var start = negativeDirection > 0 ? 0 : 5
+          var positiveRow = checkRow(peca.boardX, start, negativeDirection);
+
+          if (positiveRow.length > 0) {
+            if (
+              PlayerTurn == 1 &&
+              board.boardCoordinates[peca.boardX][positiveRow[0]] == 2
+            ) {
+              criaPecaTemp(
+                peca,
+                positiveRow[0] - peca.boardY,
+                peca.boardX - peca.boardX,
+                peca.boardX - peca.boardX,
+                positiveRow[0] - peca.boardY
+              );
+            } else if (
+              PlayerTurn == 2 &&
+              board.boardCoordinates[peca.boardX][positiveRow[0]] == 1
+            ) {
+              criaPecaTemp(
+                peca,
+                positiveRow[0] - peca.boardY,
+                peca.boardX - peca.boardX,
+                peca.boardX - peca.boardX,
+                positiveRow[0] - peca.boardY
+              );
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function checkEatingAfterFirstCollumn(peca, negativeDirection) {
+    if (
+      (negativeDirection == 1 && peca.boardY > 2.5) ||
+      (negativeDirection == -1 && peca.boardY < 2.5)
+    ) {
+      nextRow = peca.boardY;
+    } else {
+      nextRow = 5 - peca.boardY;
+    }
+
+    if (peca.boardX > 2.5) {
+      startPos = 5;
+      direction = -1;
+    } else {
+      startPos = 0;
+      direction = 1;
+    }
+
+    var firstRow = checkRow(nextRow, startPos, direction);
+
+    if (firstRow.length > 0) {
+      if (
+        PlayerTurn == 1 &&
+        board.boardCoordinates[nextRow][firstRow[0]] == 2
+      ) {
+        criaPecaTemp(
+          peca,
+          firstRow[0] - peca.boardY,
+          nextRow - peca.boardX,
+          nextRow - peca.boardX,
+          firstRow[0] - peca.boardY
+        );
+      } else if (
+        PlayerTurn == 2 &&
+        board.boardCoordinates[nextRow][firstRow[0]] == 1
+      ) {
+        criaPecaTemp(
+          peca,
+          nextCollumn - peca.boardY,
+          firstCollumn[0] - peca.boardX,
+          firstCollumn[0] - peca.boardX,
+          nextCollumn - peca.boardY
+        );
+      }
+    } else {
+      var start = negativeDirection > 0 ? 5 : 0
+      var negativeRow = checkRow(5 - peca.boardX, start, -1 * negativeDirection);
+
+      if (negativeRow.length > 0) {
+        if (
+          PlayerTurn == 1 &&
+          board.boardCoordinates[5 - peca.boardX][negativeRow[0]] == 2
+        ) {
+          criaPecaTemp(
+            peca,
+            negativeRow[0] - peca.boardY,
+            5 - peca.boardX - peca.boardX,
+            5 - peca.boardX - peca.boardX,
+            negativeRow[0] - peca.boardY
+          );
+        } else if (
+          PlayerTurn == 2 &&
+          board.boardCoordinates[5 - peca.boardX][negativeRow[0]] == 1
+        ) {
+          criaPecaTemp(
+            peca,
+            negativeRow[0] - peca.boardY,
+            5 - peca.boardX - peca.boardX,
+            5 - peca.boardX - peca.boardX,
+            negativeRow[0] - peca.boardY
+          );
+        }
+      } else {
+        if (
+          (negativeDirection == 1 && peca.boardX < 2.5) ||
+          (negativeDirection == -1 && peca.boardX > 2.5)
+        ) {
+          nextCollumn = peca.boardX;
+        } else {
+          nextCollumn = 5 - peca.boardX;
+        }
+    
+        if (peca.boardX < 2.5) {
+          startPos = 5;
+          direction = -1;
+        } else {
+          startPos = 0;
+          direction = 1;
+        }
+
+        var secondCollumn = checkCollumn(nextCollumn, startPos, direction);
+
+        if (secondCollumn.length > 0) {
+          if (
+            PlayerTurn == 1 &&
+            board.boardCoordinates[secondCollumn[0]][nextCollumn] == 2
+          ) {
+            criaPecaTemp(
+              peca,
+              nextCollumn - peca.boardY,
+              secondCollumn[0] - peca.boardX,
+              secondCollumn[0] - peca.boardX,
+              nextCollumn - peca.boardY
+            );
+          } else if (
+            PlayerTurn == 2 &&
+            board.boardCoordinates[secondCollumn[0]][nextCollumn] == 1
+          ) {
+            criaPecaTemp(
+              peca,
+              nextCollumn - peca.boardY,
+              secondCollumn[0] - peca.boardX,
+              secondCollumn[0] - peca.boardX,
+              nextCollumn - peca.boardY
+            );
+          }
+        } else {
+          var start = negativeDirection > 0 ? 0 : 5
+          var positiveRow = checkRow(peca.boardX, start, negativeDirection);
+
+          if (positiveRow.length > 0) {
+            if (
+              PlayerTurn == 1 &&
+              board.boardCoordinates[peca.boardX][positiveRow[0]] == 2
+            ) {
+              criaPecaTemp(
+                peca,
+                positiveRow[0] - peca.boardY,
+                peca.boardX - peca.boardX,
+                peca.boardX - peca.boardX,
+                positiveRow[0] - peca.boardY
+              );
+            } else if (
+              PlayerTurn == 2 &&
+              board.boardCoordinates[peca.boardX][positiveRow[0]] == 1
+            ) {
+              criaPecaTemp(
+                peca,
+                positiveRow[0] - peca.boardY,
+                peca.boardX - peca.boardX,
+                peca.boardX - peca.boardX,
+                positiveRow[0] - peca.boardY
+              );
+            }
+          }
+        }
+      }
+    }
+  }
 };
