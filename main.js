@@ -417,7 +417,7 @@ window.onload = function () {
           if (board.boardCoordinates[pecaT.boardX][pecaT.boardY] == 2) {
             peca.x = peca.xPrevious;
             peca.y = peca.yPrevious;
-            peca.direction = !pecaT.direction;
+            peca.direction = pecaT.direction;
             peca.isMoving = true;
             peca.finalPositionX = pecaT.x;
             peca.finalPositionY = pecaT.y;
@@ -444,7 +444,7 @@ window.onload = function () {
 
             peca.x = peca.xPrevious;
             peca.y = peca.yPrevious;
-            peca.direction = !pecaT.direction;
+            peca.direction = pecaT.direction;
             peca.isMoving = true;
             peca.finalPositionX = pecaT.x;
             peca.finalPositionY = pecaT.y;
@@ -482,7 +482,8 @@ window.onload = function () {
   }
 
   function checkEatingAfterFirstRow(peca, negativeDirection) {
-    var dir = negativeDirection > 0 ? true : false;
+    var dir = (peca.boardY < 2.5) ? negativeDirection : !negativeDirection;
+    
     if (
       (negativeDirection == 1 && peca.boardX > 2.5) ||
       (negativeDirection == -1 && peca.boardX < 2.5)
@@ -657,7 +658,7 @@ window.onload = function () {
   }
 
   function checkEatingAfterFirstCollumn(peca, negativeDirection) {
-    var dir = negativeDirection > 0 ? true : false;
+    var dir = (peca.boardX > 2.5) ? negativeDirection : !negativeDirection;
     if (
       (negativeDirection == 1 && peca.boardY > 2.5) ||
       (negativeDirection == -1 && peca.boardY < 2.5)

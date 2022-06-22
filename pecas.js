@@ -303,13 +303,13 @@ Peca.prototype.move = function () {
   } else {
     if (this.smallWheel) {
       // o movimento começã no canto inferio direito 
-      if (this.moverDireita) {
-        if ((this.x >= ((this.canvas * 6) / 24)) && !this.rotationDireita) {
+      if (this.moverBaixo) {
+        if ((this.x >= ((this.canvas * 6) / 24)) && !this.rotationBaixo) {
           this.x -= 2;
           this.radians = -Math.PI / 2;
         } else if ((this.x <= (((this.canvas * 9) / 24) + 0.001))) {
 
-          this.rotationDireita = true;
+          this.rotationBaixo = true;
           this.radians -= 0.5 * Math.PI / 90;
           this.x = ((this.canvas * 6) / 24) + (this.smallRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 18) / 24) + (this.smallRadius * Math.sin(this.radians));
@@ -317,20 +317,20 @@ Peca.prototype.move = function () {
           if ((this.x >= (((this.canvas * 9) / 24) - 0.001)) && (this.y <= (((this.canvas * 18) / 24))) + 0.001) {
             this.x = ((this.canvas * 9) / 24);
             this.y = ((this.canvas * 18) / 24);
-            this.rotationDireita = false;
-            this.moverDireita = false;
-            this.moverCima = true;
+            this.rotationBaixo = false;
+            this.moverBaixo = false;
+            this.moverEsquerda = true;
           }
         }
       }
 
       // de seguida começa a subir para o canto superior direito
-      if (this.moverCima) {
-        if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
+      if (this.moverEsquerda) {
+        if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationEsquerda) {
           this.y -= 2;
           this.radians = 0;
         } else if ((this.y >= (((this.canvas * 3) / 24)))) {
-          this.rotationCima = true;
+          this.rotationEsquerda = true;
           this.radians -= 0.5 * Math.PI / 90;
           this.x = ((this.canvas * 6) / 24) + (this.smallRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 6) / 24) + (this.smallRadius * Math.sin(this.radians));
@@ -338,9 +338,9 @@ Peca.prototype.move = function () {
           if ((this.x >= (((this.canvas * 6) / 24) - 0.001)) && (this.y >= (((this.canvas * 9) / 24) - 0.001))) {
             this.x = ((this.canvas * 6) / 24);
             this.y = ((this.canvas * 9) / 24);
-            this.rotationCima = false;
-            this.moverCima = false;
-            this.moverEsquerda = true;
+            this.rotationEsquerda = false;
+            this.moverEsquerda = false;
+            this.moverCima = true;
           }
         }
       }
@@ -348,13 +348,13 @@ Peca.prototype.move = function () {
 
 
       // move -se para a esquerda em direção ao canto superior esquerdo
-      if (this.moverEsquerda) {
-        if ((this.x <= (((this.canvas * 18) / 24))) && !this.rotationEsquerda) {
+      if (this.moverCima) {
+        if ((this.x <= (((this.canvas * 18) / 24))) && !this.rotationCima) {
           this.x += 2;
           this.radians = Math.PI / 2;
         } else
         if ((this.x <= (((this.canvas * 21) / 24)))) {
-          this.rotationEsquerda = true;
+          this.rotationCima = true;
           this.radians -= 0.5 * Math.PI / 90;
           this.x = ((this.canvas * 18) / 24) + (this.smallRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 6) / 24) + (this.smallRadius * Math.sin(this.radians));
@@ -362,43 +362,43 @@ Peca.prototype.move = function () {
           if ((Math.round(this.x) <= (((this.canvas * 15) / 24))) && (Math.round(this.y) <= (((this.canvas * 6) / 24)))) {
             this.x = ((this.canvas * 15) / 24);
             this.y = ((this.canvas * 6) / 24);
-            this.rotationEsquerda = false;
-            this.moverEsquerda = false;
-            this.moverBaixo = true;
+            this.rotationCima = false;
+            this.moverCima = false;
+            this.moverDireita = true;
 
           }
         }
       }
 
       // move de volta baixo  em direcao ao canto inferior esquerdo
-      if (this.moverBaixo) {
-        if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationBaixo) {
+      if (this.moverDireita) {
+        if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationDireita) {
           this.y += 2;
           this.radians = Math.PI;
         } else
         if ((this.y <= (((this.canvas * 21) / 24)))) {
-          this.rotationBaixo = true;
+          this.rotationDireita = true;
           this.radians -= 0.5 * Math.PI / 90;
           this.x = ((this.canvas * 18) / 24) + (this.smallRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 18) / 24) + (this.smallRadius * Math.sin(this.radians));
           if ((Math.round(this.x) <= (((this.canvas * 18) / 24))) && (Math.round(this.y) <= (((this.canvas * 15) / 24)))) {
             this.x = ((this.canvas * 18) / 24);
             this.y = ((this.canvas * 15) / 24);
-            this.rotationBaixo = false;
-            this.moverBaixo = false;
-            this.moverDireita = true;
+            this.rotationDireita = false;
+            this.moverDireita = false;
+            this.moverBaixo= true;
           }
         }
       }
     } else {
       // o movimento começã no canto inferio direito 
-      if (this.moverDireita) {
-        if ((this.x >= ((this.canvas * 6) / 24)) && !this.rotationDireita) {
+      if (this.moverBaixo) {
+        if ((this.x >= ((this.canvas * 6) / 24)) && !this.rotationBaixo) {
           this.x -= 2;
           this.radians = -Math.PI / 2;
         } else if ((this.x <= (((this.canvas * 11) / 24) + 0.001))) {
 
-          this.rotationDireita = true;
+          this.rotationBaixo = true;
           this.radians -= 0.5 * Math.PI / 90;
           this.x = ((this.canvas * 6) / 24) + (this.largeRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 18) / 24) + (this.largeRadius * Math.sin(this.radians));
@@ -406,20 +406,20 @@ Peca.prototype.move = function () {
           if ((this.x >= (((this.canvas * 11) / 24) - 0.001)) && (this.y <= (((this.canvas * 18) / 24))) + 0.001) {
             this.x = ((this.canvas * 11) / 24);
             this.y = ((this.canvas * 18) / 24);
-            this.rotationDireita = false;
-            this.moverDireita = false;
-            this.moverCima = true;
+            this.rotationBaixo = false;
+            this.moverBaixo = false;
+            this.moverEsquerda = true;
           }
         }
       }
 
       // de seguida começa a subir para o canto superior direito
-      if (this.moverCima) {
-        if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
+      if (this.moverEsquerda) {
+        if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationEsquerda) {
           this.y -= 2;
           this.radians = 0;
         } else if ((this.y >= (((this.canvas * 0.5) / 24)))) {
-          this.rotationCima = true;
+          this.rotationEsquerda = true;
           this.radians -= 0.5 * Math.PI / 90;
           this.x = ((this.canvas * 6) / 24) + (this.largeRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 6) / 24) + (this.largeRadius * Math.sin(this.radians));
@@ -427,9 +427,9 @@ Peca.prototype.move = function () {
           if ((this.x >= (((this.canvas * 6) / 24) - 0.001)) && (this.y >= (((this.canvas * 11) / 24) - 0.001))) {
             this.x = ((this.canvas * 6) / 24);
             this.y = ((this.canvas * 11) / 24);
-            this.rotationCima = false;
-            this.moverCima = false;
-            this.moverEsquerda = true;
+            this.rotationEsquerda = false;
+            this.moverEsquerda = false;
+            this.moverCima = true;
           }
         }
       }
@@ -437,13 +437,13 @@ Peca.prototype.move = function () {
 
 
       // move -se para a esquerda em direção ao canto superior esquerdo
-      if (this.moverEsquerda) {
-        if ((this.x <= (((this.canvas * 18) / 24))) && !this.rotationEsquerda) {
+      if (this.moverCima) {
+        if ((this.x <= (((this.canvas * 18) / 24))) && !this.rotationCima) {
           this.x += 2;
           this.radians = Math.PI / 2;
         } else
         if ((this.x <= (((this.canvas * 23.5) / 24)))) {
-          this.rotationEsquerda = true;
+          this.rotationCima = true;
           this.radians -= 0.5 * Math.PI / 90;
           this.x = ((this.canvas * 18) / 24) + (this.largeRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 6) / 24) + (this.largeRadius * Math.sin(this.radians));
@@ -451,31 +451,31 @@ Peca.prototype.move = function () {
           if ((Math.round(this.x) <= (((this.canvas * 13) / 24) + 1)) && (Math.round(this.y) <= (((this.canvas * 6) / 24)))) {
             this.x = ((this.canvas * 13) / 24);
             this.y = ((this.canvas * 6) / 24);
-            this.rotationEsquerda = false;
-            this.moverEsquerda = false;
-            this.moverBaixo = true;
+            this.rotationCima = false;
+            this.moverCima = false;
+            this.moverDireita = true;
 
           }
         }
       }
 
       // move de volta baixo  em direcao ao canto inferior esquerdo
-      if (this.moverBaixo) {
-        if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationBaixo) {
+      if (this.moverDireita) {
+        if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationDireita) {
           this.y += 2;
           this.radians = Math.PI;
         } else
         if ((this.y <= (((this.canvas * 23.5) / 24)))) {
-          this.rotationBaixo = true;
+          this.rotationDireita = true;
           this.radians -= 0.5 * Math.PI / 90;
           this.x = ((this.canvas * 18) / 24) + (this.largeRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 18) / 24) + (this.largeRadius * Math.sin(this.radians));
           if ((Math.round(this.x) <= (((this.canvas * 18) / 24))) && (Math.round(this.y) <= (((this.canvas * 13) / 24) + 1))) {
             this.x = ((this.canvas * 18) / 24);
             this.y = ((this.canvas * 13) / 24);
-            this.rotationBaixo = false;
-            this.moverBaixo = false;
-            this.moverDireita = true;
+            this.rotationDireita = false;
+            this.moverDireita = false;
+            this.moverBaixo = true;
           }
         }
       }
