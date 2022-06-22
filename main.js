@@ -177,14 +177,16 @@ window.onload = function () {
     //desenhar todas as pecas pretas ;##todas estas pecas iram ter o numero 2 no tabuleiro
     // o canvas estar a ser dividido em 24 partes para poder obter o ponto central de cada casa
     for (
-      var i = (canvas.width /24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
     ) {
-      var peca = new Peca(canvas.width /32, "black");
+      var peca = new Peca(canvas.width / 32, "black");
       peca.x = i;
       peca.y = ((canvas.height * 0.5) / 12) * 7;
 
       peca.boardX = x;
       peca.boardY = y;
+      peca.xPrevious = peca.x;
+      peca.yPrevious = peca.y;
 
       board.boardCoordinates[x][y] = 2;
 
@@ -196,14 +198,16 @@ window.onload = function () {
     x = 1;
 
     for (
-      var i = (canvas.width /24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
     ) {
-      var peca = new Peca(canvas.width /32, "black");
+      var peca = new Peca(canvas.width / 32, "black");
       peca.x = i;
       peca.y = ((canvas.height * 0.5) / 12) * 9;
 
       peca.boardX = x;
       peca.boardY = y;
+      peca.xPrevious = peca.x;
+      peca.yPrevious = peca.y;
 
       board.boardCoordinates[x][y] = 2;
       y++;
@@ -215,13 +219,15 @@ window.onload = function () {
     y = 0;
     x = 4;
     for (
-      var i = (canvas.width /24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
     ) {
-      var peca = new Peca(canvas.width /32, "white");
+      var peca = new Peca(canvas.width / 32, "white");
       peca.x = i;
       peca.y = ((canvas.height * 0.75 - canvas.height * 0.25) / 12) * 15;
       peca.boardX = x;
       peca.boardY = y;
+      peca.xPrevious = peca.x;
+      peca.yPrevious = peca.y;
 
       board.boardCoordinates[x][y] = 1;
       y++;
@@ -231,13 +237,15 @@ window.onload = function () {
     y = 0;
     x = 5;
     for (
-      var i = (canvas.width /24) * 7; i < canvas.width * 0.75; i += canvas.width/ 12
+      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
     ) {
-      var peca = new Peca(canvas.width /32, "white");
+      var peca = new Peca(canvas.width / 32, "white");
       peca.x = i;
       peca.y = ((canvas.height * 0.5) / 12) * 17;
       peca.boardX = x;
       peca.boardY = y;
+      peca.xPrevious = peca.x;
+      peca.yPrevious = peca.y;
 
       board.boardCoordinates[x][y] = 1;
       y++;
@@ -255,7 +263,7 @@ window.onload = function () {
       PecasBrancas[i].draw(context);
     }
     for (var i = 0; i < PecasTemporarias.length; i++) {
-      PecasTemporarias[i].draw(context);
+      PecasTemporarias[i].drawTemp(context);
     }
   }
 
@@ -451,7 +459,7 @@ window.onload = function () {
   }
 
   function criaPecaTemp(peca, valX, valY, valBoardX, valBoardY) {
-    var pecaT = new Peca(canvas.width /32);
+    var pecaT = new Peca(canvas.width / 32);
     pecaT.x = peca.x + valX * ((canvas.width * 0.5) / 6);
     pecaT.y = peca.y + valY * ((canvas.width * 0.5) / 6);
     pecaT.boardX = peca.boardX + valBoardX;
@@ -529,5 +537,5 @@ window.onload = function () {
   //esta função vai ter de procurar 8 vezes por cada canto
   // 8 vezes porque é necessário fazer o scan nos dois sentidos
 
-  
+
 };
