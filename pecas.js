@@ -147,9 +147,6 @@ Peca.prototype.move = function () {
 
   }
 
-
-
-
   // de seguida começa a subir para o canto superior direito
   if (this.moverCima) {
     if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
@@ -178,8 +175,6 @@ Peca.prototype.move = function () {
     }
 
   }
-
-
 
   // move -se para a esquerda em direção ao canto superior esquerdo
 
@@ -211,8 +206,6 @@ Peca.prototype.move = function () {
     }
 
   }
-
-
 
   // move de volta baixo  em direcao ao canto inferior esquerdo
 
