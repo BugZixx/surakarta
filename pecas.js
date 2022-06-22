@@ -116,7 +116,7 @@ Peca.prototype.getBounds = function () {
 Peca.prototype.move = function () {
 
   // help me this is gonna be a shit with sprinkles in it
- 
+  // o movimento começã no canto inferio direito 
   if (this.moverDireita) {
 
     if ((this.x <= ((this.canvas * 18) / 24)) && !this.rotationDireita) {
@@ -133,7 +133,7 @@ Peca.prototype.move = function () {
 
       // thix.x = ((this.canvas * 15) / 24) e this.y = ((this.canvas * 18) / 24)  (this.y >= (((this.canvas * 18) / 24) - 10)) &&
 
-      if ((this.x <= (((this.canvas * 15) / 24)+0.001)) && (this.y <= (((this.canvas * 18) / 24)))+0.001) {
+      if ((this.x <= (((this.canvas * 15) / 24) + 0.001)) && (this.y <= (((this.canvas * 18) / 24))) + 0.001) {
         this.x = ((this.canvas * 15) / 24);
         this.y = ((this.canvas * 18) / 24);
         this.rotationDireita = false;
@@ -147,6 +147,10 @@ Peca.prototype.move = function () {
 
   }
 
+
+
+
+  // de seguida começa a subir para o canto superior direito
   if (this.moverCima) {
     if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
       this.y -= 2;
@@ -174,6 +178,10 @@ Peca.prototype.move = function () {
     }
 
   }
+
+
+
+  // move -se para a esquerda em direção ao canto superior esquerdo
 
   if (this.moverEsquerda) {
     if ((this.x >= (((this.canvas * 6) / 24))) && !this.rotationEsquerda) {
@@ -203,6 +211,10 @@ Peca.prototype.move = function () {
     }
 
   }
+
+
+
+  // move de volta baixo  em direcao ao canto inferior esquerdo
 
   if (this.moverBaixo) {
     if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationBaixo) {
