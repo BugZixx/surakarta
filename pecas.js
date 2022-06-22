@@ -33,7 +33,7 @@ function Peca(radius, color) {
   this.largeRadius = ((this.canvas * 5) / 24);
 
 
-  this.moverDireita = true;
+  this.moverDireita = false;
   this.rotationDireita = false;
 
   this.moverCima = false;
@@ -49,6 +49,10 @@ function Peca(radius, color) {
   this.smallWheel = false;
 
   this.radians = 0;
+  this.isMoving = false;
+
+  this.finalPositionX = 0;
+  this.finalPositionY = 0;
 }
 
 Peca.prototype.draw = function (context) {
@@ -77,7 +81,13 @@ Peca.prototype.draw = function (context) {
     context.fillStyle = this.color;
     context.beginPath();
     //x, y, radius, start_angle, end_angle, anti-clockwise
-    this.move();
+    // if(this.finalPositionX == Math.round(this.x) &&this.finalPositionY == Math.round(this.y) ){
+    //   this.isMoving=false;
+    // }
+    if (this.isMoving) {
+      this.move();
+    }
+    
     context.arc(0, 0, this.radius, 0, (Math.PI * 2), true);
     context.closePath();
     context.fill();
@@ -117,6 +127,7 @@ Peca.prototype.getBounds = function () {
 };
 
 Peca.prototype.move = function () {
+
 
   if (this.direction) {
     if (this.smallWheel) {
@@ -437,7 +448,7 @@ Peca.prototype.move = function () {
           this.x = ((this.canvas * 18) / 24) + (this.largeRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 6) / 24) + (this.largeRadius * Math.sin(this.radians));
 
-          if ((Math.round(this.x) <= (((this.canvas * 13) / 24)+1)) && (Math.round(this.y) <= (((this.canvas * 6) / 24)))) {
+          if ((Math.round(this.x) <= (((this.canvas * 13) / 24) + 1)) && (Math.round(this.y) <= (((this.canvas * 6) / 24)))) {
             this.x = ((this.canvas * 13) / 24);
             this.y = ((this.canvas * 6) / 24);
             this.rotationEsquerda = false;
@@ -459,7 +470,7 @@ Peca.prototype.move = function () {
           this.radians -= 0.5 * Math.PI / 90;
           this.x = ((this.canvas * 18) / 24) + (this.largeRadius * Math.cos(this.radians));
           this.y = ((this.canvas * 18) / 24) + (this.largeRadius * Math.sin(this.radians));
-          if ((Math.round(this.x) <= (((this.canvas * 18) / 24))) && (Math.round(this.y) <= (((this.canvas * 13) / 24)+1))) {
+          if ((Math.round(this.x) <= (((this.canvas * 18) / 24))) && (Math.round(this.y) <= (((this.canvas * 13) / 24) + 1))) {
             this.x = ((this.canvas * 18) / 24);
             this.y = ((this.canvas * 13) / 24);
             this.rotationBaixo = false;
