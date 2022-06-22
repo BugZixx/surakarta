@@ -45,6 +45,9 @@ function Peca(radius, color) {
   this.moverBaixo = false;
   this.rotationBaixo = false;
 
+  this.direction = false;
+  this.smallWheel = false;
+
   this.radians = 0;
 }
 
@@ -115,132 +118,360 @@ Peca.prototype.getBounds = function () {
 
 Peca.prototype.move = function () {
 
-  // help me this is gonna be a shit with sprinkles in it
-  // o movimento começã no canto inferio direito 
-  if (this.moverDireita) {
+  if (this.direction) {
+    if (this.smallWheel) {
+      // o movimento começã no canto inferio direito 
+      if (this.moverDireita) {
+        if ((this.x <= ((this.canvas * 18) / 24)) && !this.rotationDireita) {
+          this.x += 2;
+          this.radians = -Math.PI / 2;
+        } else if ((this.x >= (((this.canvas * 15) / 24) + 0.001))) {
+          this.rotationDireita = true;
+          this.radians += 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 18) / 24) + (this.smallRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 18) / 24) + (this.smallRadius * Math.sin(this.radians));
 
-    if ((this.x <= ((this.canvas * 18) / 24)) && !this.rotationDireita) {
-
-      this.x += 2;
-      this.radians = -Math.PI / 2;
-
-    } else if ((this.x >= (((this.canvas * 15) / 24) + 0.001))) {
-      this.rotationDireita = true;
-
-      this.radians += 0.5 * Math.PI / 90;
-      this.x = ((this.canvas * 18) / 24) + (this.smallRadius * Math.cos(this.radians));
-      this.y = ((this.canvas * 18) / 24) + (this.smallRadius * Math.sin(this.radians));
-
-      // thix.x = ((this.canvas * 15) / 24) e this.y = ((this.canvas * 18) / 24)  (this.y >= (((this.canvas * 18) / 24) - 10)) &&
-
-      if ((this.x <= (((this.canvas * 15) / 24) + 0.001)) && (this.y <= (((this.canvas * 18) / 24))) + 0.001) {
-        this.x = ((this.canvas * 15) / 24);
-        this.y = ((this.canvas * 18) / 24);
-        this.rotationDireita = false;
-        this.moverDireita = false;
-        this.moverCima = true;
-
-        // console.log(this.y);
-        // console.log((((this.canvas * 6) / 24)));
+          if ((this.x <= (((this.canvas * 15) / 24) + 0.001)) && (this.y <= (((this.canvas * 18) / 24))) + 0.001) {
+            this.x = ((this.canvas * 15) / 24);
+            this.y = ((this.canvas * 18) / 24);
+            this.rotationDireita = false;
+            this.moverDireita = false;
+            this.moverCima = true;
+          }
+        }
       }
-    }
+      // de seguida começa a subir para o canto superior direito
+      if (this.moverCima) {
+        if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
+          this.y -= 2;
+          this.radians = Math.PI;
+        } else if ((this.y >= (((this.canvas * 3) / 24)))) {
+          this.rotationCima = true;
+          this.radians += 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 18) / 24) + (this.smallRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 6) / 24) + (this.smallRadius * Math.sin(this.radians));
 
+          if ((this.x >= (((this.canvas * 18) / 24) - 0.001)) && (this.y >= (((this.canvas * 9) / 24) - 0.001))) {
+            this.x = ((this.canvas * 18) / 24);
+            this.y = ((this.canvas * 9) / 24);
+            this.rotationCima = false;
+            this.moverCima = false;
+            this.moverEsquerda = true;
+          }
+        }
+      }
+      // move -se para a esquerda em direção ao canto superior esquerdo
+      if (this.moverEsquerda) {
+        if ((this.x >= (((this.canvas * 6) / 24))) && !this.rotationEsquerda) {
+          this.x -= 2;
+          this.radians = Math.PI / 2;
+        } else
+        if ((this.x >= (((this.canvas * 3) / 24)))) {
+          this.rotationEsquerda = true;
+          this.radians += 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 6) / 24) + (this.smallRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 6) / 24) + (this.smallRadius * Math.sin(this.radians));
+
+          if ((Math.round(this.x) >= (((this.canvas * 9) / 24))) && (Math.round(this.y) >= (((this.canvas * 6) / 24)))) {
+            this.x = ((this.canvas * 9) / 24);
+            this.y = ((this.canvas * 6) / 24);
+            this.rotationEsquerda = false;
+            this.moverEsquerda = false;
+            this.moverBaixo = true;
+
+          }
+        }
+      }
+      // move de volta baixo  em direcao ao canto inferior esquerdo
+      if (this.moverBaixo) {
+        if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationBaixo) {
+          this.y += 2;
+          this.radians = 2 * Math.PI;
+        } else
+        if ((this.y <= (((this.canvas * 21) / 24)))) {
+          this.rotationBaixo = true;
+          this.radians += 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 6) / 24) + (this.smallRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 18) / 24) + (this.smallRadius * Math.sin(this.radians));
+          if ((this.x <= (((this.canvas * 6) / 24) + 0.001)) && (this.y <= (((this.canvas * 15) / 24) + 0.001))) {
+            this.x = ((this.canvas * 6) / 24);
+            this.y = ((this.canvas * 15) / 24);
+            this.rotationBaixo = false;
+            this.moverBaixo = false;
+            this.moverDireita = true;
+          }
+        }
+      }
+    } else {
+      // AQUI ELE ANIMA CONSOANTE OS CIRCULOS MAIORES
+      // o movimento começã no canto inferio direito 
+      if (this.moverDireita) {
+        if ((this.x <= ((this.canvas * 18) / 24)) && !this.rotationDireita) {
+          this.x += 2;
+          this.radians = -Math.PI / 2;
+        } else if ((this.x >= (((this.canvas * 13) / 24) + 0.001))) {
+          this.rotationDireita = true;
+          this.radians += 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 18) / 24) + (this.largeRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 18) / 24) + (this.largeRadius * Math.sin(this.radians));
+
+          if ((this.x <= (((this.canvas * 13) / 24) + 0.001)) && (this.y <= (((this.canvas * 18) / 24))) + 0.001) {
+            this.x = ((this.canvas * 13) / 24);
+            this.y = ((this.canvas * 18) / 24);
+            this.rotationDireita = false;
+            this.moverDireita = false;
+            this.moverCima = true;
+          }
+        }
+      }
+      // de seguida começa a subir para o canto superior direito
+      if (this.moverCima) {
+        if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
+          this.y -= 2;
+          this.radians = Math.PI;
+        } else if ((this.y >= (((this.canvas * 0.5) / 24)))) {
+          this.rotationCima = true;
+          this.radians += 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 18) / 24) + (this.largeRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 6) / 24) + (this.largeRadius * Math.sin(this.radians));
+
+          if ((this.x >= (((this.canvas * 18) / 24) - 0.001)) && (this.y >= (((this.canvas * 11) / 24) - 0.001))) {
+            this.x = ((this.canvas * 18) / 24);
+            this.y = ((this.canvas * 11) / 24);
+            this.rotationCima = false;
+            this.moverCima = false;
+            this.moverEsquerda = true;
+          }
+        }
+      }
+      // move -se para a esquerda em direção ao canto superior esquerdo
+      if (this.moverEsquerda) {
+        if ((this.x >= (((this.canvas * 6) / 24))) && !this.rotationEsquerda) {
+          this.x -= 2;
+          this.radians = Math.PI / 2;
+        } else
+        if ((this.x >= (((this.canvas * 0.5) / 24)))) {
+          this.rotationEsquerda = true;
+          this.radians += 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 6) / 24) + (this.largeRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 6) / 24) + (this.largeRadius * Math.sin(this.radians));
+
+          if ((Math.round(this.x) >= (((this.canvas * 11) / 24) - 1)) && (Math.round(this.y) >= (((this.canvas * 6) / 24)))) {
+            this.x = ((this.canvas * 11) / 24);
+            this.y = ((this.canvas * 6) / 24);
+            this.rotationEsquerda = false;
+            this.moverEsquerda = false;
+            this.moverBaixo = true;
+
+          }
+        }
+      }
+      // move de volta baixo  em direcao ao canto inferior esquerdo
+      if (this.moverBaixo) {
+        if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationBaixo) {
+          this.y += 2;
+          this.radians = 2 * Math.PI;
+        } else
+        if ((this.y <= (((this.canvas * 23.5) / 24)))) {
+          this.rotationBaixo = true;
+          this.radians += 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 6) / 24) + (this.largeRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 18) / 24) + (this.largeRadius * Math.sin(this.radians));
+          if ((this.x <= (((this.canvas * 6) / 24) + 0.001)) && (this.y <= (((this.canvas * 13) / 24) + 0.001))) {
+            this.x = ((this.canvas * 6) / 24);
+            this.y = ((this.canvas * 13) / 24);
+            this.rotationBaixo = false;
+            this.moverBaixo = false;
+            this.moverDireita = true;
+          }
+        }
+      }
+
+
+    }
+  } else {
+    if (this.smallWheel) {
+      // o movimento começã no canto inferio direito 
+      if (this.moverDireita) {
+        if ((this.x >= ((this.canvas * 6) / 24)) && !this.rotationDireita) {
+          this.x -= 2;
+          this.radians = -Math.PI / 2;
+        } else if ((this.x <= (((this.canvas * 9) / 24) + 0.001))) {
+
+          this.rotationDireita = true;
+          this.radians -= 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 6) / 24) + (this.smallRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 18) / 24) + (this.smallRadius * Math.sin(this.radians));
+
+          if ((this.x >= (((this.canvas * 9) / 24) - 0.001)) && (this.y <= (((this.canvas * 18) / 24))) + 0.001) {
+            this.x = ((this.canvas * 9) / 24);
+            this.y = ((this.canvas * 18) / 24);
+            this.rotationDireita = false;
+            this.moverDireita = false;
+            this.moverCima = true;
+          }
+        }
+      }
+
+      // de seguida começa a subir para o canto superior direito
+      if (this.moverCima) {
+        if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
+          this.y -= 2;
+          this.radians = 0;
+        } else if ((this.y >= (((this.canvas * 3) / 24)))) {
+          this.rotationCima = true;
+          this.radians -= 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 6) / 24) + (this.smallRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 6) / 24) + (this.smallRadius * Math.sin(this.radians));
+
+          if ((this.x >= (((this.canvas * 6) / 24) - 0.001)) && (this.y >= (((this.canvas * 9) / 24) - 0.001))) {
+            this.x = ((this.canvas * 6) / 24);
+            this.y = ((this.canvas * 9) / 24);
+            this.rotationCima = false;
+            this.moverCima = false;
+            this.moverEsquerda = true;
+          }
+        }
+      }
+
+
+
+      // move -se para a esquerda em direção ao canto superior esquerdo
+      if (this.moverEsquerda) {
+        if ((this.x <= (((this.canvas * 18) / 24))) && !this.rotationEsquerda) {
+          this.x += 2;
+          this.radians = Math.PI / 2;
+        } else
+        if ((this.x <= (((this.canvas * 21) / 24)))) {
+          this.rotationEsquerda = true;
+          this.radians -= 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 18) / 24) + (this.smallRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 6) / 24) + (this.smallRadius * Math.sin(this.radians));
+
+          if ((Math.round(this.x) <= (((this.canvas * 15) / 24))) && (Math.round(this.y) <= (((this.canvas * 6) / 24)))) {
+            this.x = ((this.canvas * 15) / 24);
+            this.y = ((this.canvas * 6) / 24);
+            this.rotationEsquerda = false;
+            this.moverEsquerda = false;
+            this.moverBaixo = true;
+
+          }
+        }
+      }
+
+      // move de volta baixo  em direcao ao canto inferior esquerdo
+      if (this.moverBaixo) {
+        if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationBaixo) {
+          this.y += 2;
+          this.radians = Math.PI;
+        } else
+        if ((this.y <= (((this.canvas * 21) / 24)))) {
+          this.rotationBaixo = true;
+          this.radians -= 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 18) / 24) + (this.smallRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 18) / 24) + (this.smallRadius * Math.sin(this.radians));
+          if ((Math.round(this.x) <= (((this.canvas * 18) / 24))) && (Math.round(this.y) <= (((this.canvas * 15) / 24)))) {
+            this.x = ((this.canvas * 18) / 24);
+            this.y = ((this.canvas * 15) / 24);
+            this.rotationBaixo = false;
+            this.moverBaixo = false;
+            this.moverDireita = true;
+          }
+        }
+      }
+    } else {
+      // o movimento começã no canto inferio direito 
+      if (this.moverDireita) {
+        if ((this.x >= ((this.canvas * 6) / 24)) && !this.rotationDireita) {
+          this.x -= 2;
+          this.radians = -Math.PI / 2;
+        } else if ((this.x <= (((this.canvas * 11) / 24) + 0.001))) {
+
+          this.rotationDireita = true;
+          this.radians -= 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 6) / 24) + (this.largeRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 18) / 24) + (this.largeRadius * Math.sin(this.radians));
+
+          if ((this.x >= (((this.canvas * 11) / 24) - 0.001)) && (this.y <= (((this.canvas * 18) / 24))) + 0.001) {
+            this.x = ((this.canvas * 11) / 24);
+            this.y = ((this.canvas * 18) / 24);
+            this.rotationDireita = false;
+            this.moverDireita = false;
+            this.moverCima = true;
+          }
+        }
+      }
+
+      // de seguida começa a subir para o canto superior direito
+      if (this.moverCima) {
+        if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
+          this.y -= 2;
+          this.radians = 0;
+        } else if ((this.y >= (((this.canvas * 0.5) / 24)))) {
+          this.rotationCima = true;
+          this.radians -= 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 6) / 24) + (this.largeRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 6) / 24) + (this.largeRadius * Math.sin(this.radians));
+
+          if ((this.x >= (((this.canvas * 6) / 24) - 0.001)) && (this.y >= (((this.canvas * 11) / 24) - 0.001))) {
+            this.x = ((this.canvas * 6) / 24);
+            this.y = ((this.canvas * 11) / 24);
+            this.rotationCima = false;
+            this.moverCima = false;
+            this.moverEsquerda = true;
+          }
+        }
+      }
+
+
+
+      // move -se para a esquerda em direção ao canto superior esquerdo
+      if (this.moverEsquerda) {
+        if ((this.x <= (((this.canvas * 18) / 24))) && !this.rotationEsquerda) {
+          this.x += 2;
+          this.radians = Math.PI / 2;
+        } else
+        if ((this.x <= (((this.canvas * 23.5) / 24)))) {
+          this.rotationEsquerda = true;
+          this.radians -= 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 18) / 24) + (this.largeRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 6) / 24) + (this.largeRadius * Math.sin(this.radians));
+
+          if ((Math.round(this.x) <= (((this.canvas * 13) / 24)+1)) && (Math.round(this.y) <= (((this.canvas * 6) / 24)))) {
+            this.x = ((this.canvas * 13) / 24);
+            this.y = ((this.canvas * 6) / 24);
+            this.rotationEsquerda = false;
+            this.moverEsquerda = false;
+            this.moverBaixo = true;
+
+          }
+        }
+      }
+
+      // move de volta baixo  em direcao ao canto inferior esquerdo
+      if (this.moverBaixo) {
+        if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationBaixo) {
+          this.y += 2;
+          this.radians = Math.PI;
+        } else
+        if ((this.y <= (((this.canvas * 23.5) / 24)))) {
+          this.rotationBaixo = true;
+          this.radians -= 0.5 * Math.PI / 90;
+          this.x = ((this.canvas * 18) / 24) + (this.largeRadius * Math.cos(this.radians));
+          this.y = ((this.canvas * 18) / 24) + (this.largeRadius * Math.sin(this.radians));
+          if ((Math.round(this.x) <= (((this.canvas * 18) / 24))) && (Math.round(this.y) <= (((this.canvas * 13) / 24)+1))) {
+            this.x = ((this.canvas * 18) / 24);
+            this.y = ((this.canvas * 13) / 24);
+            this.rotationBaixo = false;
+            this.moverBaixo = false;
+            this.moverDireita = true;
+          }
+        }
+      }
+
+    }
   }
 
-  // de seguida começa a subir para o canto superior direito
-  if (this.moverCima) {
-    if ((this.y >= (((this.canvas * 6) / 24))) && !this.rotationCima) {
-      this.y -= 2;
-      this.radians = Math.PI;
 
 
-    } else if ((this.y >= (((this.canvas * 3) / 24)))) {
-      this.rotationCima = true;
-
-      this.radians += 0.5 * Math.PI / 90;
-      this.x = ((this.canvas * 18) / 24) + (this.smallRadius * Math.cos(this.radians));
-      this.y = ((this.canvas * 6) / 24) + (this.smallRadius * Math.sin(this.radians));
-
-
-      if ((this.x >= (((this.canvas * 18) / 24) - 0.001)) && (this.y >= (((this.canvas * 9) / 24) - 0.001))) {
-        this.x = ((this.canvas * 18) / 24);
-        this.y = ((this.canvas * 9) / 24);
-        this.rotationCima = false;
-        this.moverCima = false;
-        this.moverEsquerda = true;
-        // console.log(this.y);
-        // console.log((((this.canvas * 6) / 24)));
-      }
-
-    }
-
-  }
-
-  // move -se para a esquerda em direção ao canto superior esquerdo
-
-  if (this.moverEsquerda) {
-    if ((this.x >= (((this.canvas * 6) / 24))) && !this.rotationEsquerda) {
-      this.x -= 2;
-      this.radians = Math.PI / 2;
-
-
-    } else
-    if ((this.x >= (((this.canvas * 3) / 24)))) {
-      this.rotationEsquerda = true;
-
-      this.radians += 0.5 * Math.PI / 90;
-      this.x = ((this.canvas * 6) / 24) + (this.smallRadius * Math.cos(this.radians));
-      this.y = ((this.canvas * 6) / 24) + (this.smallRadius * Math.sin(this.radians));
-
-
-      if ((Math.round(this.x) >= (((this.canvas * 9) / 24))) && (Math.round(this.y) >= (((this.canvas * 6) / 24)))) {
-        this.x = ((this.canvas * 9) / 24);
-        this.y = ((this.canvas * 6) / 24);
-        this.rotationEsquerda = false;
-        this.moverEsquerda = false;
-        this.moverBaixo = true;
-        // console.log(this.y);
-        // console.log((((this.canvas * 6) / 24)));
-      }
-
-    }
-
-  }
-
-  // move de volta baixo  em direcao ao canto inferior esquerdo
-
-  if (this.moverBaixo) {
-    if ((this.y <= (((this.canvas * 18) / 24))) && !this.rotationBaixo) {
-      this.y += 2;
-      this.radians = 2 * Math.PI;
-
-
-    } else
-    if ((this.y <= (((this.canvas * 21) / 24)))) {
-      this.rotationBaixo = true;
-
-      this.radians += 0.5 * Math.PI / 90;
-      this.x = ((this.canvas * 6) / 24) + (this.smallRadius * Math.cos(this.radians));
-      this.y = ((this.canvas * 18) / 24) + (this.smallRadius * Math.sin(this.radians));
-
-
-      if ((Math.round(this.x) <= (((this.canvas * 6) / 24))) && (Math.round(this.y) <= (((this.canvas * 15) / 24)))) {
-        this.x = ((this.canvas * 6) / 24);
-        this.y = ((this.canvas * 15) / 24);
-        this.rotationBaixo = false;
-        this.moverBaixo = false;
-        this.moverDireita = true;
-        // console.log(this.y);
-        // console.log((((this.canvas * 6) / 24)));
-      }
-    }
-  }
 }
-
-// } else {
-//   //this.radians += 0.5 * Math.PI / 180;
-
-//   //this.x = this.xPrevious + (this.smallRadius * Math.cos(this.radians))
-//  // this.y = this.yPrevious + (this.smallRadius * Math.sin(this.radians));
-//   // necesario ter o canvas width ou canvas height
-// }
