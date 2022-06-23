@@ -427,16 +427,20 @@ window.onload = function () {
         dist = Math.sqrt(dx * dx + dy * dy);
       if (!pecaT.eixo) {
         console.log("X: " + peca.boardX + " Y: " + peca.boardY);
-          if (peca.boardX < 1.5 || peca.boardX > 3.5) {
+          if ((peca.boardX > 0.5 && peca.boardX < 1.5) || (peca.boardX > 3.5 && peca.boardX < 4.5)) {
             peca.smallWheel = true;
+            console.log("SmallWheel true X ");
           } else {
             peca.smallWheel = false;
+            console.log("SmallWheel false X ");
           }
       } else {
-        if (peca.boardY < 1.5 || peca.boardY > 3.5) {
+        if ((peca.boardY > 0.5 && peca.boardY < 1.5)|| (peca.boardY > 3.5 && peca.boardY < 4.5)) {
           peca.smallWheel = true;
+          console.log("SmallWheel true Y ");
         } else {
           peca.smallWheel = false;
+          console.log("SmallWheel false X ");
         }
       }
 
