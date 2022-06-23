@@ -80,8 +80,6 @@ window.onload = function () {
           }
         });
       }
-      //console.log("Updated board ");
-      //console.log(board.boardCoordinates);
     },
     false
   );
@@ -91,12 +89,10 @@ window.onload = function () {
     function () {
       // os Foreach serve para percorrer todas as pecas do array
       PecasBrancas.forEach((peca) => {
-        // WARNING ISTO ESTA A PEGAR EM TODAS AS PECAS
         if (isMouseDown && peca.isBeingHold) {
           peca.x = mouse.x;
           peca.y = mouse.y;
         } else if (utils.containsPoint(peca.getBounds(), mouse.x, mouse.y)) {
-          //log.value = "in ball: mousemove";
 
           peca.realcado = true;
         } else {
@@ -109,7 +105,7 @@ window.onload = function () {
           peca.x = mouse.x;
           peca.y = mouse.y;
         } else if (utils.containsPoint(peca.getBounds(), mouse.x, mouse.y)) {
-          //log.value = "in ball: mousemove";
+
 
           peca.realcado = true;
         } else {
@@ -125,7 +121,6 @@ window.onload = function () {
     context.clearRect(0, 0, canvas.width, canvas.height);
     board.draw(context);
 
-    // Aqui vai ficar toda a logica do nosso jogo
 
     // start position of the game #############################################################################
     if (!gameStarted) {
@@ -134,14 +129,7 @@ window.onload = function () {
       console.log(board.boardCoordinates);
       // linearScanAttack(3, 0);
     } else {
-      /*TODO: fazer os turnos entre os jogadores 
-                                    fazer os movimentos das pecas 
-                                        incluindo o 3/4 circlcular motion 
-                                    fazer com que registe que o rato precionou numa peca(quando o rato for primido ira ver o jogador e depois a pecas)    
-                                    
-        
-                                    */
-      //definir turnos \\ ou pausa para animação do ataque
+     
       switch (PlayerTurn) {
         case 1:
           break;
@@ -156,17 +144,7 @@ window.onload = function () {
       drawPecas();
     }
 
-    /*
-                                var dx = mouse.x - arrow.x,
-                                    dy = mouse.y - arrow.y,
-                                    angle = Math.atan2(dy, dx),
-                                    vx = Math.cos(angle) * speed,
-                                    vy = Math.sin(angle) * speed;
-                        
-                                arrow.rotation = angle; //radians
-                                arrow.x += vx;
-                                arrow.y += vy;
-                                arrow.draw(context);*/
+   
   })();
 
   function startOfGame() {
