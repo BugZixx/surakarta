@@ -425,6 +425,10 @@ window.onload = function () {
       var dx = pecaT.x - peca.x,
         dy = pecaT.y - peca.y,
         dist = Math.sqrt(dx * dx + dy * dy);
+        if (((peca.boardX == 1 || peca.boardX == 4) && pecaT.eixo) || ((peca.boardY == 1 || peca.boardY == 4) && pecaT.eixo)) {
+          peca.smallWheel = true;
+          console.log("small")
+        }
 
       if (dist <= 50) {
         if (PlayerTurn == 1) {
@@ -435,11 +439,6 @@ window.onload = function () {
             peca.isMoving = true;
             peca.finalPositionX = pecaT.x;
             peca.finalPositionY = pecaT.y;
-            console.log(pecaT.boardX+ "eixo "+ pecaT.eixo);
-            if (((pecaT.boardX == 1 || pecaT.boardX == 4) && pecaT.eixo) || ((pecaT.boardY == 1 || pecaT.boardY == 4) && pecaT.eixo)) {
-              peca.smallWheel = true;
-              console.log("small")
-            }
 
             if (pecaT.moverEsquerda) peca.moverEsquerda = true;
             else if (pecaT.moverDireita) peca.moverDireita = true;
@@ -460,18 +459,12 @@ window.onload = function () {
           PlayerTurn = 2;
         } else if (PlayerTurn == 2) {
           if (board.boardCoordinates[pecaT.boardX][pecaT.boardY] == 1) {
-
             peca.x = peca.xPrevious;
             peca.y = peca.yPrevious;
             peca.direction = pecaT.direction;
             peca.isMoving = true;
             peca.finalPositionX = pecaT.x;
             peca.finalPositionY = pecaT.y;
-            console.log(pecaT.boardX+ "eixo "+ pecaT.eixo);
-            if (((pecaT.boardX == 1 || pecaT.boardX == 4) && pecaT.eixo) || ((pecaT.boardY == 1 || pecaT.boardY == 4) && pecaT.eixo)) {
-              peca.smallWheel = true;
-              console.log("small")
-            }
 
             if (pecaT.moverEsquerda) peca.moverEsquerda = true;
             else if (pecaT.moverDireita) peca.moverDireita = true;
