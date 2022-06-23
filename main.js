@@ -34,28 +34,39 @@ window.onload = function () {
   canvas.addEventListener(
     "mousedown",
     function () {
-      if (PlayerTurn == 1) {
-        PecasBrancas.forEach((peca) => {
-          if (utils.containsPoint(peca.getBounds(), mouse.x, mouse.y)) {
-            isMouseDown = true;
-            peca.isBeingHold = true;
-            legalMove(peca);
-            legalEatMove(peca);
-            peca.xPrevious = peca.x;
-            peca.yPrevious = peca.y;
-          }
-        });
-      } else if (PlayerTurn == 2) {
-        PecasPretas.forEach((peca) => {
-          if (utils.containsPoint(peca.getBounds(), mouse.x, mouse.y)) {
-            isMouseDown = true;
-            peca.isBeingHold = true;
-            legalMove(peca);
-            legalEatMove(peca);
-            peca.xPrevious = peca.x;
-            peca.yPrevious = peca.y;
-          }
-        });
+      if (!gameOver) {
+        if (PlayerTurn == 1) {
+          PecasBrancas.forEach((peca) => {
+            if (utils.containsPoint(peca.getBounds(), mouse.x, mouse.y)) {
+              isMouseDown = true;
+              peca.isBeingHold = true;
+              legalMove(peca);
+              legalEatMove(peca);
+              peca.xPrevious = peca.x;
+              peca.yPrevious = peca.y;
+            }
+          });
+        } else if (PlayerTurn == 2) {
+          PecasPretas.forEach((peca) => {
+            if (utils.containsPoint(peca.getBounds(), mouse.x, mouse.y)) {
+              isMouseDown = true;
+              peca.isBeingHold = true;
+              legalMove(peca);
+              legalEatMove(peca);
+              peca.xPrevious = peca.x;
+              peca.yPrevious = peca.y;
+            }
+          });
+        }
+      } else {
+        if (utils.containsPoint(gameOverMenu.getBounds(), mouse.x, mouse.y)) {
+          PecasBrancas = new Array();
+          PecasPretas = new Array();
+          PecasTemporarias = new Array();
+          gameStarted = true;
+          gameOver = false;
+          startOfGame();
+        }
       }
     },
     false
@@ -123,30 +134,18 @@ window.onload = function () {
 
     // start position of the game #############################################################################
     if (!gameStarted) {
-      if (!gameOver) {
-        startOfGame();
-        gameStarted = true;
-        console.log(board.boardCoordinates);
-      } else {
-        gameOverMenu.draw(context);
-      }
+      startOfGame();
+      gameStarted = true;
+      console.log(board.boardCoordinates);
       // linearScanAttack(3, 0);
     } else {
-      switch (PlayerTurn) {
-        case 1:
-          break;
-        case 2:
-          break;
-        case 0:
-          break;
-        default:
-          break;
-      }
-
       drawPecas();
     }
-    gameOverMenu.draw(context);
-  })();
+
+    if (gameOver) {
+      gameOverMenu.draw(context);
+    }
+    })();
 
   function startOfGame() {
     // o X é a linha da matrix
@@ -526,13 +525,11 @@ window.onload = function () {
     peca.y = peca.yPrevious;
 
     if (PecasBrancas.length == 0) {
-      playerWhoWon = 1;
+      gameOverMenu.winner = 2;
       gameOver = true;
-      gameStarted = false;
     } else if (PecasPretas.length == 0) {
-      playerWhoWon = 2;
+      gameOverMenu.winner = 1;
       gameOver = true;
-      gameStarted = false;
     }
 
     // cautela com isto para depois fazer o calculo da distancia pro snap

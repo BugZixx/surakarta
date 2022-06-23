@@ -58,7 +58,7 @@ function Peca(radius, color) {
 
 Peca.prototype.draw = function (context) {
   //caso esteja com o rato por cima a peca será desenhada de maneira diferente
-  if (this.realcado) {
+  if (this.realcado && !this.isMoving) {
     context.save();
     context.translate(this.x, this.y);
 
