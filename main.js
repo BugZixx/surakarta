@@ -425,10 +425,13 @@ window.onload = function () {
       var dx = pecaT.x - peca.x,
         dy = pecaT.y - peca.y,
         dist = Math.sqrt(dx * dx + dy * dy);
-        if (((peca.boardX == 1 || peca.boardX == 4) && pecaT.eixo) || ((peca.boardY == 1 || peca.boardY == 4) && pecaT.eixo)) {
+        console.log("eixo : "+pecaT.eixo)
+        if (((peca.boardX < 1.5 || peca.boardX > 3.5) && pecaT.eixo) || ((peca.boardY < 1.5  || peca.boardY> 3.5) && !pecaT.eixo)) {
           peca.smallWheel = true;
           console.log("small")
         }
+        if(((peca.boardY < 1.5  || peca.boardY> 3.5) && !pecaT.eixo))
+        console.log("peca X "+peca.boardX+" peca Y"+peca.boardY );
 
       if (dist <= 50) {
         if (PlayerTurn == 1) {
