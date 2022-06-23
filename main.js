@@ -435,6 +435,7 @@ window.onload = function () {
             peca.isMoving = true;
             peca.finalPositionX = pecaT.x;
             peca.finalPositionY = pecaT.y;
+            console.log(peca.finalPositionX ,peca.finalPositionY );
            console.log(pecaT.direction);
 
             if (pecaT.moverEsquerda) peca.moverEsquerda = true;

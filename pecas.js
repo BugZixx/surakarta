@@ -81,13 +81,19 @@ Peca.prototype.draw = function (context) {
     context.fillStyle = this.color;
     context.beginPath();
     //x, y, radius, start_angle, end_angle, anti-clockwise
-    // if(this.finalPositionX == Math.round(this.x) &&this.finalPositionY == Math.round(this.y) ){
-    //   this.isMoving=false;
-    // }
+    if (Math.round(this.finalPositionX) == Math.round(this.x) && Math.round(this.finalPositionY) == Math.round(this.y) && this.isMoving) {
+      this.isMoving = false;
+      this.x = this.finalPositionX;
+      this.y = this.finalPositionY;
+      this.moverDireita = false;
+      this.moverCima= false;
+      this.moverEsquerda = false;
+      this.moverBaixo = false;
+    }
     if (this.isMoving) {
       this.move();
     }
-    
+
     context.arc(0, 0, this.radius, 0, (Math.PI * 2), true);
     context.closePath();
     context.fill();
@@ -384,7 +390,7 @@ Peca.prototype.move = function () {
             this.y = ((this.canvas * 15) / 24);
             this.rotationDireita = false;
             this.moverDireita = false;
-            this.moverBaixo= true;
+            this.moverBaixo = true;
           }
         }
       }
@@ -394,7 +400,7 @@ Peca.prototype.move = function () {
         if ((this.x >= ((this.canvas * 6) / 24)) && !this.rotationBaixo) {
           this.x -= 2;
           this.radians = -Math.PI / 2;
-          
+
         } else if ((this.x <= (((this.canvas * 11) / 24) + 0.001))) {
 
           this.rotationBaixo = true;
