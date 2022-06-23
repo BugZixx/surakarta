@@ -32,6 +32,7 @@ function Peca(radius, color) {
   this.smallRadius = ((this.canvas * 3) / 24);
   this.largeRadius = ((this.canvas * 5) / 24);
 
+  this.eixo = false;
 
   this.moverDireita = false;
   this.rotationDireita = false;
@@ -81,14 +82,15 @@ Peca.prototype.draw = function (context) {
     context.fillStyle = this.color;
     context.beginPath();
     //x, y, radius, start_angle, end_angle, anti-clockwise
-    if (Math.round(this.finalPositionX) == Math.round(this.x) && Math.round(this.finalPositionY) == Math.round(this.y) && this.isMoving) {
+    if (this.finalPositionX-10 <=this.x && this.finalPositionX+10 >=this.x && this.finalPositionY-10 <=this.y && this.finalPositionY+10 >=this.y && this.isMoving) {
       this.isMoving = false;
       this.x = this.finalPositionX;
       this.y = this.finalPositionY;
       this.moverDireita = false;
-      this.moverCima= false;
+      this.moverCima = false;
       this.moverEsquerda = false;
       this.moverBaixo = false;
+      this.smallWheel = false;
     }
     if (this.isMoving) {
       this.move();

@@ -392,7 +392,7 @@ window.onload = function () {
         else if (!half && direcao) pecaT.moverBaixo = true;
         else if (!half && !direcao) pecaT.moverEsquerda = true;
       }
-
+      pecaT.eixo = eixo;
       pecaT.direction = orientacao;
     }
 
@@ -435,8 +435,11 @@ window.onload = function () {
             peca.isMoving = true;
             peca.finalPositionX = pecaT.x;
             peca.finalPositionY = pecaT.y;
-            console.log(peca.finalPositionX ,peca.finalPositionY );
-           console.log(pecaT.direction);
+            console.log(pecaT.boardX+ "eixo "+ pecaT.eixo);
+            if (((pecaT.boardX == 1 || pecaT.boardX == 4) && pecaT.eixo) || ((pecaT.boardY == 1 || pecaT.boardY == 4) && pecaT.eixo)) {
+              peca.smallWheel = true;
+              console.log("small")
+            }
 
             if (pecaT.moverEsquerda) peca.moverEsquerda = true;
             else if (pecaT.moverDireita) peca.moverDireita = true;
@@ -464,7 +467,11 @@ window.onload = function () {
             peca.isMoving = true;
             peca.finalPositionX = pecaT.x;
             peca.finalPositionY = pecaT.y;
-            console.log(pecaT.direction);
+            console.log(pecaT.boardX+ "eixo "+ pecaT.eixo);
+            if (((pecaT.boardX == 1 || pecaT.boardX == 4) && pecaT.eixo) || ((pecaT.boardY == 1 || pecaT.boardY == 4) && pecaT.eixo)) {
+              peca.smallWheel = true;
+              console.log("small")
+            }
 
             if (pecaT.moverEsquerda) peca.moverEsquerda = true;
             else if (pecaT.moverDireita) peca.moverDireita = true;
