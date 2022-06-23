@@ -429,14 +429,12 @@ window.onload = function () {
         console.log("X: " + peca.boardX + " Y: " + peca.boardY);
           if (peca.boardX < 1.5 || peca.boardX > 3.5) {
             peca.smallWheel = true;
-            console.log("X got here");
           } else {
             peca.smallWheel = false;
           }
       } else {
         if (peca.boardY < 1.5 || peca.boardY > 3.5) {
           peca.smallWheel = true;
-          console.log("Y got here");
         } else {
           peca.smallWheel = false;
         }
