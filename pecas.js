@@ -127,8 +127,6 @@ Peca.prototype.getBounds = function () {
 };
 
 Peca.prototype.move = function () {
-
-
   if (this.direction) {
     if (this.smallWheel) {
       // o movimento começã no canto inferio direito 

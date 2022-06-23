@@ -368,17 +368,31 @@ window.onload = function () {
   }
 
 
-  function criaPecaTemp(peca, valX, valY, valBoardX, valBoardY, something, eixo, orientacao, direcao) {
+  function criaPecaTemp(peca, valX, valY, valBoardX, valBoardY, eatMove, eixo, half, orientacao, direcao) {
     var pecaT = new Peca(canvas.width / 32);
     pecaT.x = peca.x + valX * ((canvas.width * 0.5) / 6);
     pecaT.y = peca.y + valY * ((canvas.width * 0.5) / 6);
     pecaT.boardX = peca.boardX + valBoardX;
     pecaT.boardY = peca.boardY + valBoardY;
-    if (something) {
-      if (eixo && direcao) pecaT.moverDireita= true;
-      else if (eixo && !direcao) pecaT.moverBaixo = true;
-      else if (!eixo && direcao) pecaT.moverCima = true;
-      else if (!eixo && !direcao) pecaT.moverEsquerda = true;
+    if (eatMove) {
+      if (!eixo) {
+        console.log(
+          "Eix: " + eixo + ", Half: " + half + ", Dir: " + direcao + " Final Or: " + orientacao
+        );
+        if (half && direcao) pecaT.moverDireita = true;
+        else if (half && !direcao) pecaT.moverBaixo = true;
+        else if (!half && direcao) pecaT.moverCima = true;
+        else if (!half && !direcao) pecaT.moverEsquerda = true;
+      } else {
+        console.log(
+          "Eix: " + eixo + ", Half: " + half + ", Dir: " + direcao + " Final Or: " + orientacao
+        );
+        if (half && direcao) pecaT.moverDireita = true;
+        else if (half && !direcao) pecaT.moverCima = true;
+        else if (!half && direcao) pecaT.moverBaixo = true;
+        else if (!half && !direcao) pecaT.moverEsquerda = true;
+      }
+
       pecaT.direction = orientacao;
     }
 
@@ -486,6 +500,8 @@ window.onload = function () {
   function checkEatingAfterFirstRow(peca, negativeDirection) {
     var d = negativeDirection > 0 ? true : false;
     var dir = (peca.boardX > 2.5) ? d : !d;
+    var half = (peca.boardX > 2.5) ? true : false;
+
     if (
       (negativeDirection == 1 && peca.boardX > 2.5) ||
       (negativeDirection == -1 && peca.boardX < 2.5)
@@ -518,7 +534,9 @@ window.onload = function () {
           nextCollumn - peca.boardY,
           true,
           false,
-          dir,d
+          half,
+          dir,
+          d
         );
       } else if (
         PlayerTurn == 2 &&
@@ -532,7 +550,9 @@ window.onload = function () {
           nextCollumn - peca.boardY,
           true,
           false,
-          dir,d
+          half,
+          dir,
+          d
         );
       }
     } else {
@@ -552,7 +572,9 @@ window.onload = function () {
             negativeRow[0] - peca.boardY,
             true,
             false,
-            dir,d
+            half,
+            dir,
+            d
           );
         } else if (
           PlayerTurn == 2 &&
@@ -566,7 +588,9 @@ window.onload = function () {
             negativeRow[0] - peca.boardY,
             true,
             false,
-            dir,d
+            half,
+            dir,
+            d
           );
         }
       } else {
@@ -602,7 +626,9 @@ window.onload = function () {
               nextCollumn - peca.boardY,
               true,
               false,
-              dir,d
+              half,
+              dir,
+              d
             );
           } else if (
             PlayerTurn == 2 &&
@@ -616,7 +642,9 @@ window.onload = function () {
               nextCollumn - peca.boardY,
               true,
               false,
-              dir,d
+              half,
+              dir,
+              d
             );
           }
         } else {
@@ -636,7 +664,9 @@ window.onload = function () {
                 positiveRow[0] - peca.boardY,
                 true,
                 false,
-                dir,d
+                half,
+                dir,
+                d
               );
             } else if (
               PlayerTurn == 2 &&
@@ -650,7 +680,9 @@ window.onload = function () {
                 positiveRow[0] - peca.boardY,
                 true,
                 false,
-                dir,d
+                half,
+                dir,
+                d
               );
             }
           }
@@ -661,8 +693,9 @@ window.onload = function () {
 
   function checkEatingAfterFirstCollumn(peca, negativeDirection) {
     var d = negativeDirection > 0 ? true : false;
-   
     var dir = (peca.boardY < 2.5) ? d : !d;
+    var half = (peca.boardY > 2.5) ? true : false;
+
     if (
       (negativeDirection == 1 && peca.boardY > 2.5) ||
       (negativeDirection == -1 && peca.boardY < 2.5)
@@ -695,7 +728,9 @@ window.onload = function () {
           firstRow[0] - peca.boardY,
           true,
           true,
-          dir,d
+          half,
+          dir,
+          d
         );
       } else if (
         PlayerTurn == 2 &&
@@ -709,7 +744,9 @@ window.onload = function () {
           firstRow[0] - peca.boardY,
           true,
           true,
-          dir,d
+          half,
+          dir,
+          d
         );
       }
     } else {
@@ -729,7 +766,9 @@ window.onload = function () {
             5 - peca.boardY - peca.boardY,
             true,
             true,
-            dir,d
+            half,
+            dir,
+            d
           );
         } else if (
           PlayerTurn == 2 &&
@@ -743,7 +782,9 @@ window.onload = function () {
             5 - peca.boardY - peca.boardY,
             true,
             true,
-            dir,d
+            half,
+            dir,
+            d
           );
         }
       } else {
@@ -779,7 +820,9 @@ window.onload = function () {
               secondRow[0] - peca.boardY,
               true,
               true,
-              dir,d
+              half,
+              dir,
+              d
             );
           } else if (
             PlayerTurn == 2 &&
@@ -793,7 +836,9 @@ window.onload = function () {
               secondRow[0] - peca.boardY,
               true,
               true,
-              dir,d
+              half,
+              dir,
+              d
             );
           }
         } else {
@@ -813,7 +858,9 @@ window.onload = function () {
                 peca.boardY - peca.boardY,
                 true,
                 true,
-                dir,d
+                half,
+                dir,
+                d
               );
             } else if (
               PlayerTurn == 2 &&
@@ -827,7 +874,9 @@ window.onload = function () {
                 peca.boardY - peca.boardY,
                 true,
                 true,
-                dir,d
+                half,
+                dir,
+                d
               );
             }
           }
