@@ -16,11 +16,14 @@ window.onload = function () {
     isMouseDown = false,
     // criação do tabuleiro
     board = new Board(canvas),
+    gameOverMenu = new GameOverMenu(canvas),
     //array para guardar as pecas brancas e pretas
     PecasBrancas = new Array(),
     PecasPretas = new Array(),
     PecasTemporarias = new Array(),
     gameStarted = false,
+    gameOver = false,
+    playerWhoWon,
     speed = 3,
     // PlayerTurn ira decidir se esta no turno do jogador 1, 2 ou se esta numa animação de ataque
     PlayerTurn = 1;
@@ -93,7 +96,6 @@ window.onload = function () {
           peca.x = mouse.x;
           peca.y = mouse.y;
         } else if (utils.containsPoint(peca.getBounds(), mouse.x, mouse.y)) {
-
           peca.realcado = true;
         } else {
           peca.realcado = false;
@@ -105,8 +107,6 @@ window.onload = function () {
           peca.x = mouse.x;
           peca.y = mouse.y;
         } else if (utils.containsPoint(peca.getBounds(), mouse.x, mouse.y)) {
-
-
           peca.realcado = true;
         } else {
           peca.realcado = false;
@@ -121,15 +121,17 @@ window.onload = function () {
     context.clearRect(0, 0, canvas.width, canvas.height);
     board.draw(context);
 
-
     // start position of the game #############################################################################
     if (!gameStarted) {
-      startOfGame();
-      gameStarted = true;
-      console.log(board.boardCoordinates);
+      if (!gameOver) {
+        startOfGame();
+        gameStarted = true;
+        console.log(board.boardCoordinates);
+      } else {
+        gameOverMenu.draw(context);
+      }
       // linearScanAttack(3, 0);
     } else {
-     
       switch (PlayerTurn) {
         case 1:
           break;
@@ -143,8 +145,7 @@ window.onload = function () {
 
       drawPecas();
     }
-
-   
+    gameOverMenu.draw(context);
   })();
 
   function startOfGame() {
@@ -155,7 +156,9 @@ window.onload = function () {
     //desenhar todas as pecas pretas ;##todas estas pecas iram ter o numero 2 no tabuleiro
     // o canvas estar a ser dividido em 24 partes para poder obter o ponto central de cada casa
     for (
-      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7;
+      i < canvas.width * 0.75;
+      i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width / 32, "black");
       peca.x = i;
@@ -176,7 +179,9 @@ window.onload = function () {
     x = 1;
 
     for (
-      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7;
+      i < canvas.width * 0.75;
+      i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width / 32, "black");
       peca.x = i;
@@ -197,7 +202,9 @@ window.onload = function () {
     y = 0;
     x = 4;
     for (
-      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7;
+      i < canvas.width * 0.75;
+      i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width / 32, "white");
       peca.x = i;
@@ -215,7 +222,9 @@ window.onload = function () {
     y = 0;
     x = 5;
     for (
-      var i = (canvas.width / 24) * 7; i < canvas.width * 0.75; i += canvas.width / 12
+      var i = (canvas.width / 24) * 7;
+      i < canvas.width * 0.75;
+      i += canvas.width / 12
     ) {
       var peca = new Peca(canvas.width / 32, "white");
       peca.x = i;
@@ -345,8 +354,18 @@ window.onload = function () {
     }
   }
 
-
-  function criaPecaTemp(peca, valX, valY, valBoardX, valBoardY, eatMove, eixo, half, orientacao, direcao) {
+  function criaPecaTemp(
+    peca,
+    valX,
+    valY,
+    valBoardX,
+    valBoardY,
+    eatMove,
+    eixo,
+    half,
+    orientacao,
+    direcao
+  ) {
     var pecaT = new Peca(canvas.width / 32);
     pecaT.x = peca.x + valX * ((canvas.width * 0.5) / 6);
     pecaT.y = peca.y + valY * ((canvas.width * 0.5) / 6);
@@ -355,7 +374,14 @@ window.onload = function () {
     if (eatMove) {
       if (!eixo) {
         console.log(
-          "Eix: " + eixo + ", Half: " + half + ", Dir: " + direcao + " Final Or: " + orientacao
+          "Eix: " +
+            eixo +
+            ", Half: " +
+            half +
+            ", Dir: " +
+            direcao +
+            " Final Or: " +
+            orientacao
         );
         if (half && direcao) pecaT.moverDireita = true;
         else if (half && !direcao) pecaT.moverBaixo = true;
@@ -363,7 +389,14 @@ window.onload = function () {
         else if (!half && !direcao) pecaT.moverEsquerda = true;
       } else {
         console.log(
-          "Eix: " + eixo + ", Half: " + half + ", Dir: " + direcao + " Final Or: " + orientacao
+          "Eix: " +
+            eixo +
+            ", Half: " +
+            half +
+            ", Dir: " +
+            direcao +
+            " Final Or: " +
+            orientacao
         );
         if (half && direcao) pecaT.moverDireita = true;
         else if (half && !direcao) pecaT.moverCima = true;
@@ -405,15 +438,21 @@ window.onload = function () {
         dist = Math.sqrt(dx * dx + dy * dy);
       if (!pecaT.eixo) {
         console.log("X: " + peca.boardX + " Y: " + peca.boardY);
-          if ((peca.boardX > 0.5 && peca.boardX < 1.5) || (peca.boardX > 3.5 && peca.boardX < 4.5)) {
-            peca.smallWheel = true;
-            console.log("SmallWheel true X ");
-          } else {
-            peca.smallWheel = false;
-            console.log("SmallWheel false X ");
-          }
+        if (
+          (peca.boardX > 0.5 && peca.boardX < 1.5) ||
+          (peca.boardX > 3.5 && peca.boardX < 4.5)
+        ) {
+          peca.smallWheel = true;
+          console.log("SmallWheel true X ");
+        } else {
+          peca.smallWheel = false;
+          console.log("SmallWheel false X ");
+        }
       } else {
-        if ((peca.boardY > 0.5 && peca.boardY < 1.5)|| (peca.boardY > 3.5 && peca.boardY < 4.5)) {
+        if (
+          (peca.boardY > 0.5 && peca.boardY < 1.5) ||
+          (peca.boardY > 3.5 && peca.boardY < 4.5)
+        ) {
           peca.smallWheel = true;
           console.log("SmallWheel true Y ");
         } else {
@@ -438,7 +477,7 @@ window.onload = function () {
             else if (pecaT.moverCima) peca.moverCima = true;
             PecasPretas = PecasPretas.filter(
               (peca) =>
-              peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY
+                peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY
             );
 
             console.log(PecasPretas);
@@ -465,7 +504,7 @@ window.onload = function () {
 
             PecasBrancas = PecasBrancas.filter(
               (peca) =>
-              peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY
+                peca.boardX != pecaT.boardX || peca.boardY != pecaT.boardY
             );
 
             console.log(PecasBrancas);
@@ -486,14 +525,24 @@ window.onload = function () {
     peca.x = peca.xPrevious;
     peca.y = peca.yPrevious;
 
+    if (PecasBrancas.length == 0) {
+      playerWhoWon = 1;
+      gameOver = true;
+      gameStarted = false;
+    } else if (PecasPretas.length == 0) {
+      playerWhoWon = 2;
+      gameOver = true;
+      gameStarted = false;
+    }
+
     // cautela com isto para depois fazer o calculo da distancia pro snap
     PecasTemporarias = new Array();
   }
 
   function checkEatingAfterFirstRow(peca, negativeDirection) {
     var d = negativeDirection > 0 ? true : false;
-    var dir = (peca.boardX > 2.5) ? d : !d;
-    var half = (peca.boardX > 2.5) ? true : false;
+    var dir = peca.boardX > 2.5 ? d : !d;
+    var half = peca.boardX > 2.5 ? true : false;
 
     if (
       (negativeDirection == 1 && peca.boardX > 2.5) ||
@@ -549,8 +598,12 @@ window.onload = function () {
         );
       }
     } else {
-      var start = negativeDirection > 0 ? 5 : 0
-      var negativeRow = checkRow(5 - peca.boardX, start, -1 * negativeDirection);
+      var start = negativeDirection > 0 ? 5 : 0;
+      var negativeRow = checkRow(
+        5 - peca.boardX,
+        start,
+        -1 * negativeDirection
+      );
 
       if (negativeRow.length > 0) {
         if (
@@ -641,7 +694,7 @@ window.onload = function () {
             );
           }
         } else {
-          var start = negativeDirection > 0 ? 0 : 5
+          var start = negativeDirection > 0 ? 0 : 5;
           var positiveRow = checkRow(peca.boardX, start, negativeDirection);
 
           if (positiveRow.length > 0) {
@@ -686,8 +739,8 @@ window.onload = function () {
 
   function checkEatingAfterFirstCollumn(peca, negativeDirection) {
     var d = negativeDirection > 0 ? true : false;
-    var dir = (peca.boardY < 2.5) ? d : !d;
-    var half = (peca.boardY > 2.5) ? true : false;
+    var dir = peca.boardY < 2.5 ? d : !d;
+    var half = peca.boardY > 2.5 ? true : false;
 
     if (
       (negativeDirection == 1 && peca.boardY > 2.5) ||
@@ -743,8 +796,12 @@ window.onload = function () {
         );
       }
     } else {
-      var start = negativeDirection > 0 ? 5 : 0
-      var negativeCollumn = checkCollumn(5 - peca.boardY, start, -1 * negativeDirection);
+      var start = negativeDirection > 0 ? 5 : 0;
+      var negativeCollumn = checkCollumn(
+        5 - peca.boardY,
+        start,
+        -1 * negativeDirection
+      );
 
       if (negativeCollumn.length > 0) {
         if (
@@ -835,8 +892,12 @@ window.onload = function () {
             );
           }
         } else {
-          var start = negativeDirection > 0 ? 0 : 5
-          var positiveCollumn = checkCollumn(peca.boardY, start, negativeDirection);
+          var start = negativeDirection > 0 ? 0 : 5;
+          var positiveCollumn = checkCollumn(
+            peca.boardY,
+            start,
+            negativeDirection
+          );
 
           if (positiveCollumn.length > 0) {
             if (
